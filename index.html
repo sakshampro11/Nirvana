@@ -5,9 +5,249 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nirvana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body, html {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .font-space-grotesk {
+        font-family: 'Space Grotesk', sans-serif !important;
+      }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="min-h-screen bg-white">
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 z-30 bg-white flex flex-col shadow-sm" style="backdrop-filter: blur(4px);">
+      <div class="flex items-center justify-between px-12 pt-8 pb-4">
+        <h1 class="text-6xl font-extrabold text-blue-500 tracking-tight font-space-grotesk">Lokally</h1>
+        <div class="flex gap-6 text-2xl text-gray-700">
+          <button class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">notifications</span></button>
+          <button class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">settings</span></button>
+          <button class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">logout</span></button>
+        </div>
+      </div>
+      <!-- Top Section with All -->
+      <div class="flex items-center gap-4 px-12 pb-2"></div>
+    </div>
+    <!-- Main Content -->
+    <div class="flex gap-8 px-12 mt-48">
+      <!-- Complaints List -->
+      <div class="flex-1 bg-white rounded-2xl border border-gray-300 p-8 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-3xl font-bold text-gray-800 tracking-tight font-space-grotesk">Complaints</h2>
+          <div class="flex gap-2">
+            <select id="urgencyFilter" class="border rounded-lg px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
+              <option value="all">All</option>
+              <option value="Urgent">Urgent</option>
+              <option value="Daily">Daily</option>
+              <option value="Long-Term">Long-Term</option>
+            </select>
+            <select id="typeFilter" class="border rounded-lg px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
+              <option value="all">All</option>
+              <option value="Road">Road</option>
+              <option value="Water">Water</option>
+              <option value="Electric">Electric</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+        <div id="complaintsList" class="space-y-8">
+          <!-- Complaints will be rendered here by JS -->
+        </div>
+      </div>
+      <!-- Sidebar -->
+      <div class="w-96 flex flex-col gap-4">
+        <!-- Profile Card -->
+        <div class="rounded-2xl border border-gray-300 p-6 flex flex-col items-center bg-white shadow-sm">
+          <div class="w-full h-16 bg-blue-100 rounded-t-2xl mb-[-2.5rem]"></div>
+          <div class="relative z-10 mb-2">
+            <img
+              src="https://randomuser.me/api/portraits/men/32.jpg"
+              alt="profile"
+              class="w-20 h-20 rounded-full border-4 border-white shadow-lg -mt-8"
+            />
+          </div>
+          <div class="text-center">
+            <div class="font-bold text-lg">Saksham Budhii</div>
+            <div class="text-gray-500 text-sm">Designation</div>
+            <div class="text-blue-500 text-xs">Location, Locality</div>
+          </div>
+        </div>
+        <!-- Your Complaints -->
+        <div class="rounded-2xl border border-gray-300 p-4 bg-white shadow-sm">
+          <div class="font-bold text-lg mb-2">Your Complaints</div>
+          <div class="flex justify-between text-sm mb-1">
+            <span>Water Drainage</span>
+            <span class="text-gray-500">3hrs ago</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span>Pipeline</span>
+            <span class="text-gray-500">4days ago</span>
+          </div>
+        </div>
+        <!-- Urgent Problems -->
+        <div class="rounded-2xl border border-gray-300 p-4 bg-white shadow-sm">
+          <div class="font-bold text-lg mb-2">Urgent Problems</div>
+          <div class="flex justify-between text-sm mb-1">
+            <span>Water Drainage</span>
+            <span class="text-gray-500">3hrs ago</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span>Pipeline</span>
+            <span class="text-gray-500">4days ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Floating New Complaint Button -->
+    <button class="fixed bottom-8 right-12 z-40 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg flex items-center justify-center gap-2 transition">
+      <span class="material-symbols-outlined text-2xl">add</span>
+      NEW COMPLAINT
+    </button>
+    <script>
+      // Complaints data
+      const complaints = [
+        {
+          id: 1,
+          user: "Yash Kaul",
+          time: "2d ago",
+          fire: true,
+          text:
+            "Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.",
+          status: ["Pending", "Urgent"],
+          upvotes: 359,
+          comments: 37,
+          image:
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=200&q=80",
+          type: "Water"
+        },
+        {
+          id: 2,
+          user: "Saanvi Karka",
+          time: "2d ago",
+          fire: false,
+          text:
+            "Faridabad, india open garbage disposal is huge problem here, however no one pay attention to it.",
+          status: ["In Progress", "Long-Term"],
+          upvotes: 63,
+          comments: 37,
+          image:
+            "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=200&q=80",
+          type: "Road"
+        },
+        {
+          id: 3,
+          user: "Riya raj",
+          time: "2d ago",
+          fire: false,
+          text:
+            "Residents Struggle with Frequent Power Cuts, Urge Immediate Action . Unresolved Electricity Outages Disrupt Daily Life in Local Neighborhood.",
+          status: ["Resolved", "Daily"],
+          upvotes: 21,
+          comments: 37,
+          image:
+            "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=200&q=80",
+          type: "Electric"
+        },
+      ];
+
+      // Render complaints
+      function renderComplaints(filterUrgency = 'all', filterType = 'all') {
+        const list = document.getElementById('complaintsList');
+        list.innerHTML = '';
+        let filtered = complaints.filter(c => {
+          let urgencyMatch = filterUrgency === 'all' || c.status.includes(filterUrgency);
+          let typeMatch = filterType === 'all' || c.type === filterType;
+          return urgencyMatch && typeMatch;
+        });
+        if (filtered.length === 0) {
+          list.innerHTML = '<div class="text-center text-gray-400 py-8">No complaints found.</div>';
+          return;
+        }
+        filtered.forEach(c => {
+          const upvoteBtnClass = 'upvote-btn flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 font-semibold text-sm shadow-sm hover:bg-yellow-200 transition';
+          const statusHtml = c.status.map(s => {
+            let cls =
+              s === "Urgent"
+                ? "bg-red-500 text-white border-red-500"
+                : s === "Pending"
+                ? "bg-yellow-200 text-gray-800 border-yellow-400"
+                : s === "In Progress"
+                ? "bg-gray-200 text-gray-800 border-gray-400"
+                : s === "Long-Term"
+                ? "bg-gray-100 text-gray-800 border-gray-300"
+                : s === "Resolved"
+                ? "bg-blue-200 text-gray-800 border-blue-400"
+                : s === "Daily"
+                ? "bg-white text-blue-700 border-blue-400"
+                : "bg-gray-100 text-gray-800 border-gray-300";
+            return `<span class="px-3 py-1 rounded-full text-xs font-semibold border ${cls}">${s}</span>`;
+          }).join(' ');
+          list.innerHTML += `
+            <div class="flex items-start gap-4 border-b pb-6 last:border-b-0">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">${c.user}</span>
+                  <span class="text-xs text-gray-400">${c.time}</span>
+                  ${c.fire ? '<span class="ml-1">🔥</span>' : ''}
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">${c.text}</div>
+                <div class="flex gap-2 mb-3">${statusHtml}</div>
+                <div class="flex gap-3 items-center">
+                  <button onclick="toggleUpvote(this)" class="${upvoteBtnClass}">
+                    <span class="material-symbols-outlined text-base">arrow_upward</span>
+                    <span class="upvote-count">${c.upvotes}</span>
+                  </button>
+                  <button class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
+                    <span class="material-symbols-outlined text-base">chat_bubble</span>
+                    ${c.comments}
+                  </button>
+                  <button class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
+                    <span class="material-symbols-outlined text-base">sync</span>
+                    Repost
+                  </button>
+                </div>
+              </div>
+              <div class="flex flex-col items-end gap-2">
+                <a href="#" class="text-blue-600 font-semibold text-sm hover:underline">View More</a>
+                <img src="${c.image}" alt="complaint" class="w-24 h-16 object-cover rounded-lg shadow" />
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      // Upvote button logic
+      function toggleUpvote(btn) {
+        const countSpan = btn.querySelector('.upvote-count');
+        let count = parseInt(countSpan.textContent, 10);
+        const isActive = btn.classList.contains('bg-blue-500');
+        if (isActive) {
+          btn.classList.remove('bg-blue-500', 'text-white');
+          btn.classList.add('bg-yellow-100', 'text-yellow-800');
+          count--;
+        } else {
+          btn.classList.remove('bg-yellow-100', 'text-yellow-800');
+          btn.classList.add('bg-blue-500', 'text-white');
+          count++;
+        }
+        countSpan.textContent = count;
+      }
+
+      // Filtering logic
+      const urgencyFilter = document.getElementById('urgencyFilter');
+      const typeFilter = document.getElementById('typeFilter');
+      function updateComplaints() {
+        renderComplaints(urgencyFilter.value, typeFilter.value);
+      }
+      urgencyFilter.addEventListener('change', updateComplaints);
+      typeFilter.addEventListener('change', updateComplaints);
+      // Initial render
+      renderComplaints();
+      console.log('Page loaded!');
+    </script>
   </body>
 </html> 
