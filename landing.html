@@ -13,6 +13,20 @@
       .font-space-grotesk {
         font-family: 'Space Grotesk', sans-serif !important;
       }
+      .split-text {
+        display: inline-block;
+        overflow: hidden;
+      }
+      .split-letter {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      }
+      .split-letter.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
   </head>
   <body class="bg-white min-h-screen">
@@ -30,14 +44,19 @@
     <div class="flex flex-row items-center justify-between px-16 mt-24">
       <!-- Left: Text -->
       <div class="flex flex-col max-w-xl">
-        <h1 class="text-7xl font-bold text-blue-500 font-space-grotesk leading-tight mb-2">Democracy,</h1>
-        <div class="flex items-center mb-2">
-          <span class="text-7xl font-bold text-blue-500 font-space-grotesk leading-tight mr-4">→</span>
-          <span class="text-7xl font-bold text-blue-500 font-space-grotesk leading-tight">Delivered.</span>
+        <div class="text-center">
+          <h1 class="text-7xl md:text-8xl font-bold text-blue-500 mb-4">
+            <span class="split-text" id="animated-text">Democracy</span>
+            <br>
+            <div class="flex items-center justify-center">
+              <span class="text-7xl md:text-8xl font-bold text-blue-500 mr-4">→</span>
+              <span class="split-text" id="animated-text-2">delivered</span>
+            </div>
+          </h1>
+          <p class="text-lg text-gray-600 mb-8">Your voice matters. Report local issues and make a difference.</p>
         </div>
-        <p class="text-lg text-black mt-4 mb-8 max-w-md">Lokally bridges the gap between citizens and leaders making civic issues visible, actionable, and accountable.</p>
         <div class="flex gap-4">
-          <button class="bg-blue-500 hover:bg-blue-600 text-white text-xl font-semibold px-8 py-3 rounded-lg shadow transition">Get started</button>
+          <a href="signup.html" class="bg-blue-500 hover:bg-blue-600 text-white text-xl font-semibold px-8 py-3 rounded-lg shadow transition">Get started</a>
           <a href="sign-in.html" class="border border-blue-500 text-blue-500 text-xl font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition">Sign In</a>
         </div>
       </div>
@@ -47,7 +66,41 @@
       </div>
     </div>
     <script>
-      // You can add JS for button actions here if needed
+      // Animated text effect
+      function animateText() {
+        const text1 = document.getElementById('animated-text');
+        const text2 = document.getElementById('animated-text-2');
+        const letters1 = text1.textContent.split('');
+        const letters2 = text2.textContent.split('');
+        
+        text1.textContent = '';
+        text2.textContent = '';
+        
+        letters1.forEach((letter, index) => {
+          const span = document.createElement('span');
+          span.textContent = letter;
+          span.className = 'split-letter';
+          text1.appendChild(span);
+          
+          setTimeout(() => {
+            span.classList.add('animate');
+          }, index * 100);
+        });
+
+        letters2.forEach((letter, index) => {
+          const span = document.createElement('span');
+          span.textContent = letter;
+          span.className = 'split-letter';
+          text2.appendChild(span);
+          
+          setTimeout(() => {
+            span.classList.add('animate');
+          }, (letters1.length + index) * 100);
+        });
+      }
+
+      // Run animation when page loads
+      document.addEventListener('DOMContentLoaded', animateText);
     </script>
   </body>
 </html> 
