@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MLA Performance Rankings - Lokally</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body, html {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .font-space-grotesk {
+        font-family: 'Space Grotesk', sans-serif !important;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 z-30 bg-transparent flex flex-col" style="backdrop-filter: blur(4px);">
+      <div class="flex items-center justify-between px-12 pt-8 pb-4">
+        <h1 class="text-6xl font-extrabold text-blue-500 tracking-tight font-space-grotesk">Lokally</h1>
+        <div class="flex gap-6 text-2xl text-gray-700">
+          <div class="relative">
+            <button id="notificationsBtn" class="hover:bg-gray-100 rounded-full p-2 transition relative">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <div id="notificationsPopup" class="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+              <div class="py-1">
+                <div class="px-3 py-2 border-b border-gray-100">
+                  <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
+                </div>
+                <div class="max-h-96 overflow-y-auto">
+                  <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">add_circle</span>
+                    <div class="flex-1">
+                      <p class="font-normal">Four new complaints have been added</p>
+                      <p class="text-xs text-gray-400 mt-0.5">10 minutes ago</p>
+                    </div>
+                  </a>
+                  <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">warning</span>
+                    <div class="flex-1">
+                      <p class="font-normal">A complaint has reached urgent status</p>
+                      <p class="text-xs text-gray-400 mt-0.5">15 minutes ago</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <button id="settingsBtn" class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">settings</span></button>
+            <div id="settingsPopup" class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+              <div class="py-1">
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">person</span>
+                  <span class="font-normal">Profile Settings</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">security</span>
+                  <span class="font-normal">Security & Login</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">privacy_tip</span>
+                  <span class="font-normal">Privacy Controls</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">help</span>
+                  <span class="font-normal">Feedback & Help</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <button id="logoutBtn" class="hover:bg-gray-100 rounded-full p-2 transition">
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="pt-32 px-12 pb-12">
+      <div class="max-w-6xl mx-auto">
+        <!-- Header Section -->
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-3xl font-bold text-gray-800 tracking-tight font-space-grotesk">MLA Performance Rankings</h2>
+            <p class="text-gray-600 mt-1">Track and compare MLA performance metrics</p>
+          </div>
+          <div class="flex gap-4">
+            <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition flex items-center gap-2">
+              <span class="material-symbols-outlined text-base">filter_list</span>
+              Filter
+            </button>
+            <button id="exportBtn" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition flex items-center gap-2">
+              <span class="material-symbols-outlined text-base">download</span>
+              Export
+            </button>
+          </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="grid grid-cols-4 gap-6 mb-8">
+          <div class="bg-white p-6 rounded-xl border border-gray-200">
+            <div class="text-sm text-gray-600 mb-1">Average Resolution Rate</div>
+            <div class="text-3xl font-bold text-gray-900">92%</div>
+            <div class="text-sm text-green-600 mt-1">↑ 2.3% from last month</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-gray-200">
+            <div class="text-sm text-gray-600 mb-1">Average Response Time</div>
+            <div class="text-3xl font-bold text-gray-900">3.8 hrs</div>
+            <div class="text-sm text-green-600 mt-1">↓ 0.5 hrs from last month</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-gray-200">
+            <div class="text-sm text-gray-600 mb-1">Total Complaints</div>
+            <div class="text-3xl font-bold text-gray-900">4,516</div>
+            <div class="text-sm text-gray-600 mt-1">This month</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-gray-200">
+            <div class="text-sm text-gray-600 mb-1">Citizen Satisfaction</div>
+            <div class="text-3xl font-bold text-gray-900">89%</div>
+            <div class="text-sm text-green-600 mt-1">↑ 1.2% from last month</div>
+          </div>
+        </div>
+
+        <!-- Rankings List -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div class="p-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-900">MLA Rankings</h3>
+              <div class="flex gap-2">
+                <select class="border rounded-lg px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
+                  <option>All Regions</option>
+                  <option>North</option>
+                  <option>South</option>
+                  <option>East</option>
+                  <option>West</option>
+                </select>
+                <select class="border rounded-lg px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
+                  <option>This Month</option>
+                  <option>Last Month</option>
+                  <option>Last 3 Months</option>
+                  <option>Last 6 Months</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="divide-y divide-gray-200">
+            <!-- Top MLA -->
+            <div class="p-6 bg-yellow-50">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-lg font-bold">1</span>
+                <div class="flex-1">
+                  <div class="font-bold text-lg text-gray-900">MLA Gurgaon</div>
+                  <div class="text-sm text-gray-600">Resolution Rate: 98% • Response Time: 2.3 hrs</div>
+                  <div class="mt-2 flex gap-2">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">1,234 Resolved</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">98% Satisfaction</span>
+                  </div>
+                </div>
+                <div class="text-2xl font-bold text-yellow-600">98%</div>
+              </div>
+            </div>
+            <!-- Second Place -->
+            <div class="p-6 bg-gray-50">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold">2</span>
+                <div class="flex-1">
+                  <div class="font-bold text-lg text-gray-900">MLA Faridabad</div>
+                  <div class="text-sm text-gray-600">Resolution Rate: 95% • Response Time: 3.1 hrs</div>
+                  <div class="mt-2 flex gap-2">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">987 Resolved</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">95% Satisfaction</span>
+                  </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-600">95%</div>
+              </div>
+            </div>
+            <!-- Third Place -->
+            <div class="p-6 bg-amber-50">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-lg font-bold text-white">3</span>
+                <div class="flex-1">
+                  <div class="font-bold text-lg text-gray-900">MLA Noida</div>
+                  <div class="text-sm text-gray-600">Resolution Rate: 92% • Response Time: 4.2 hrs</div>
+                  <div class="mt-2 flex gap-2">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">876 Resolved</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">92% Satisfaction</span>
+                  </div>
+                </div>
+                <div class="text-2xl font-bold text-amber-600">92%</div>
+              </div>
+            </div>
+            <!-- Fourth Place -->
+            <div class="p-6">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold">4</span>
+                <div class="flex-1">
+                  <div class="font-bold text-lg text-gray-900">MLA Ghaziabad</div>
+                  <div class="text-sm text-gray-600">Resolution Rate: 89% • Response Time: 5.0 hrs</div>
+                  <div class="mt-2 flex gap-2">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">765 Resolved</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">89% Satisfaction</span>
+                  </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-600">89%</div>
+              </div>
+            </div>
+            <!-- Fifth Place -->
+            <div class="p-6">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold">5</span>
+                <div class="flex-1">
+                  <div class="font-bold text-lg text-gray-900">MLA Sonipat</div>
+                  <div class="text-sm text-gray-600">Resolution Rate: 85% • Response Time: 6.1 hrs</div>
+                  <div class="mt-2 flex gap-2">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">654 Resolved</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">85% Satisfaction</span>
+                  </div>
+                </div>
+                <div class="text-2xl font-bold text-gray-600">85%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden flex items-center justify-center">
+      <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Are you sure you want to log out?</h2>
+        <div class="flex justify-end gap-4">
+          <button class="px-4 py-2 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition" onclick="closeLogoutModal()">Cancel</button>
+          <button class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Logout functionality
+      const logoutBtn = document.getElementById('logoutBtn');
+      const logoutModal = document.getElementById('logoutModal');
+
+      logoutBtn.addEventListener('click', () => {
+        logoutModal.classList.remove('hidden');
+      });
+
+      function closeLogoutModal() {
+        logoutModal.classList.add('hidden');
+      }
+
+      function logout() {
+        window.location.href = 'landing.html';
+      }
+
+      // Close modal when clicking outside
+      logoutModal.addEventListener('click', (e) => {
+        if (e.target === logoutModal) {
+          closeLogoutModal();
+        }
+      });
+
+      // Notifications Popup Logic
+      const notificationsBtn = document.getElementById('notificationsBtn');
+      const notificationsPopup = document.getElementById('notificationsPopup');
+      let notificationsOpen = false;
+
+      notificationsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!notificationsOpen) {
+          notificationsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.add('scale-100', 'opacity-100');
+          // Close settings if open
+          if (settingsOpen) {
+            settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            settingsPopup.classList.remove('scale-100', 'opacity-100');
+            settingsOpen = false;
+          }
+        } else {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        notificationsOpen = !notificationsOpen;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+          settingsOpen = false;
+        }
+        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+          notificationsOpen = false;
+        }
+      });
+
+      // Settings Popup Logic
+      const settingsBtn = document.getElementById('settingsBtn');
+      const settingsPopup = document.getElementById('settingsPopup');
+      let settingsOpen = false;
+
+      settingsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!settingsOpen) {
+          settingsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.add('scale-100', 'opacity-100');
+          // Close notifications if open
+          if (notificationsOpen) {
+            notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            notificationsPopup.classList.remove('scale-100', 'opacity-100');
+            notificationsOpen = false;
+          }
+        } else {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        settingsOpen = !settingsOpen;
+      });
+
+      // Export leaderboard table as CSV
+      function downloadCSV(csv, filename) {
+        const csvFile = document.createElement('a');
+        csvFile.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+        csvFile.target = '_blank';
+        csvFile.download = filename;
+        document.body.appendChild(csvFile);
+        csvFile.click();
+        document.body.removeChild(csvFile);
+      }
+
+      function exportTableToCSV(filename) {
+        const table = document.querySelector('.dashboard-table table');
+        let csv = '';
+        const rows = table.querySelectorAll('tr');
+        rows.forEach((row, i) => {
+          let rowData = [];
+          row.querySelectorAll('th,td').forEach(cell => {
+            // Remove any commas in cell text to avoid CSV issues
+            rowData.push('"' + cell.innerText.replace(/"/g, '""') + '"');
+          });
+          csv += rowData.join(',') + '\n';
+        });
+        downloadCSV(csv, filename);
+      }
+
+      document.getElementById('exportBtn').addEventListener('click', function() {
+        exportTableToCSV('leaderboard.csv');
+      });
+    </script>
+  </body>
+</html> 
