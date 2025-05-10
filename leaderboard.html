@@ -86,16 +86,49 @@
     <div class="pt-32 px-12 pb-12">
       <div class="max-w-6xl mx-auto">
         <!-- Header Section -->
-        <div class="flex justify-between items-center mb-8">
-          <div>
-            <h2 class="text-3xl font-bold text-gray-800 tracking-tight font-space-grotesk">MLA Performance Rankings</h2>
+        <div class="flex items-center gap-4 mb-8">
+          <a href="admin.html" class="flex items-center text-gray-600 hover:text-gray-800 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </a>
+          <div class="flex-1">
+            <h1 class="text-3xl font-bold text-gray-800">MLA Performance Rankings</h1>
             <p class="text-gray-600 mt-1">Track and compare MLA performance metrics</p>
           </div>
           <div class="flex gap-4">
-            <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition flex items-center gap-2">
-              <span class="material-symbols-outlined text-base">filter_list</span>
-              Filter
-            </button>
+            <div class="relative">
+              <button id="filterBtn" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">filter_list</span>
+                Filter
+              </button>
+              <div id="filterPopup" class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+                <div class="py-2">
+                  <div class="px-3 py-2 border-b border-gray-100">
+                    <h3 class="text-sm font-medium text-gray-900">Filter by Region</h3>
+                  </div>
+                  <div class="py-1">
+                    <label class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 cursor-pointer">
+                      <input type="checkbox" class="mr-2" value="north"> North
+                    </label>
+                    <label class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 cursor-pointer">
+                      <input type="checkbox" class="mr-2" value="south"> South
+                    </label>
+                    <label class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 cursor-pointer">
+                      <input type="checkbox" class="mr-2" value="east"> East
+                    </label>
+                    <label class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 cursor-pointer">
+                      <input type="checkbox" class="mr-2" value="west"> West
+                    </label>
+                  </div>
+                  <div class="px-3 py-2 border-t border-gray-100">
+                    <button id="applyFilter" class="w-full px-3 py-1.5 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition">
+                      Apply Filters
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <button id="exportBtn" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition flex items-center gap-2">
               <span class="material-symbols-outlined text-base">download</span>
               Export
@@ -324,7 +357,54 @@
         settingsOpen = !settingsOpen;
       });
 
-      // Export leaderboard table as CSV
+      // Filter Popup Logic
+      const filterBtn = document.getElementById('filterBtn');
+      const filterPopup = document.getElementById('filterPopup');
+      let filterOpen = false;
+
+      filterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!filterOpen) {
+          filterPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          filterPopup.classList.add('scale-100', 'opacity-100');
+        } else {
+          filterPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          filterPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        filterOpen = !filterOpen;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (filterOpen && !filterPopup.contains(e.target) && !filterBtn.contains(e.target)) {
+          filterPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          filterPopup.classList.remove('scale-100', 'opacity-100');
+          filterOpen = false;
+        }
+      });
+
+      // Apply Filter Logic
+      document.getElementById('applyFilter').addEventListener('click', () => {
+        const selectedRegions = Array.from(document.querySelectorAll('#filterPopup input[type="checkbox"]:checked'))
+          .map(checkbox => checkbox.value);
+        
+        // Filter the MLA list based on selected regions
+        const mlaItems = document.querySelectorAll('.divide-y > div');
+        mlaItems.forEach(item => {
+          const mlaName = item.querySelector('.font-bold').textContent.toLowerCase();
+          if (selectedRegions.length === 0 || selectedRegions.some(region => mlaName.includes(region))) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Close the filter popup
+        filterPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+        filterPopup.classList.remove('scale-100', 'opacity-100');
+        filterOpen = false;
+      });
+
+      // Enhanced Export Functionality
       function downloadCSV(csv, filename) {
         const csvFile = document.createElement('a');
         csvFile.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
@@ -336,22 +416,24 @@
       }
 
       function exportTableToCSV(filename) {
-        const table = document.querySelector('.dashboard-table table');
-        let csv = '';
-        const rows = table.querySelectorAll('tr');
-        rows.forEach((row, i) => {
-          let rowData = [];
-          row.querySelectorAll('th,td').forEach(cell => {
-            // Remove any commas in cell text to avoid CSV issues
-            rowData.push('"' + cell.innerText.replace(/"/g, '""') + '"');
-          });
-          csv += rowData.join(',') + '\n';
+        const mlaItems = document.querySelectorAll('.divide-y > div');
+        let csv = 'Rank,MLA Name,Resolution Rate,Response Time,Resolved Cases,Satisfaction\n';
+        
+        mlaItems.forEach((item, index) => {
+          const mlaName = item.querySelector('.font-bold').textContent;
+          const resolutionRate = item.querySelector('.text-2xl').textContent;
+          const responseTime = item.querySelector('.text-sm.text-gray-600').textContent.split('•')[1].trim();
+          const resolvedCases = item.querySelector('.bg-green-100').textContent;
+          const satisfaction = item.querySelector('.bg-blue-100').textContent;
+          
+          csv += `${index + 1},"${mlaName}","${resolutionRate}","${responseTime}","${resolvedCases}","${satisfaction}"\n`;
         });
+        
         downloadCSV(csv, filename);
       }
 
       document.getElementById('exportBtn').addEventListener('click', function() {
-        exportTableToCSV('leaderboard.csv');
+        exportTableToCSV('mla_performance_report.csv');
       });
     </script>
   </body>
