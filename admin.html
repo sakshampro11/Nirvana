@@ -812,9 +812,9 @@
         </div>
         <!-- Leaderboard Ranking -->
         <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="leaderboardCard">
-          <button id="openLeaderboardSidebar" class="font-bold text-lg mb-2 block text-left w-full hover:text-blue-500 transition-colors duration-200 cursor-pointer focus:outline-none">
+          <a href="leaderboard.html" class="font-bold text-lg mb-2 block text-left w-full hover:text-blue-500 transition-colors duration-200 cursor-pointer focus:outline-none">
             MLA Performance Ranking
-          </button>
+          </a>
           <div class="flex justify-between text-sm mb-1">
             <div class="flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-yellow-400 flex items-center justify-center text-xs font-bold">1</span>
@@ -835,81 +835,6 @@
               <span>MLA Noida</span>
             </div>
             <span class="text-amber-600 font-semibold">92%</span>
-          </div>
-        </div>
-        <!-- Modal Popup for Leaderboard -->
-        <div id="leaderboardPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
-        <div id="leaderboardPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
-          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="leaderboardPopupPanel">
-            <div class="flex justify-between items-center p-4 border-b">
-              <span class="font-bold text-xl">MLA Performance Rankings</span>
-              <button id="closeLeaderboardPopup" class="text-2xl font-bold text-gray-500 hover:text-blue-500">&times;</button>
-            </div>
-            <div class="p-4 flex-1 overflow-auto space-y-4">
-              <!-- Top MLAs -->
-              <div class="space-y-4">
-                <div class="flex items-center gap-4 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
-                  <span class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-lg font-bold">1</span>
-                  <div class="flex-1">
-                    <div class="font-bold text-lg text-gray-900">MLA Gurgaon</div>
-                    <div class="text-sm text-gray-600">Resolution Rate: 98% • Response Time: 2.3 hrs</div>
-                    <div class="mt-2 flex gap-2">
-                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">1,234 Resolved</span>
-                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">98% Satisfaction</span>
-                    </div>
-                  </div>
-                  <div class="text-2xl font-bold text-yellow-600">98%</div>
-                </div>
-                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
-                  <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold">2</span>
-                  <div class="flex-1">
-                    <div class="font-bold text-lg text-gray-900">MLA Faridabad</div>
-                    <div class="text-sm text-gray-600">Resolution Rate: 95% • Response Time: 3.1 hrs</div>
-                    <div class="mt-2 flex gap-2">
-                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">987 Resolved</span>
-                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">95% Satisfaction</span>
-                    </div>
-                  </div>
-                  <div class="text-2xl font-bold text-gray-600">95%</div>
-                </div>
-                <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-100">
-                  <span class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-lg font-bold text-white">3</span>
-                  <div class="flex-1">
-                    <div class="font-bold text-lg text-gray-900">MLA Noida</div>
-                    <div class="text-sm text-gray-600">Resolution Rate: 92% • Response Time: 4.2 hrs</div>
-                    <div class="mt-2 flex gap-2">
-                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">876 Resolved</span>
-                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">92% Satisfaction</span>
-                    </div>
-                  </div>
-                  <div class="text-2xl font-bold text-amber-600">92%</div>
-                </div>
-                <div class="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-100">
-                  <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold">4</span>
-                  <div class="flex-1">
-                    <div class="font-bold text-lg text-gray-900">MLA Ghaziabad</div>
-                    <div class="text-sm text-gray-600">Resolution Rate: 89% • Response Time: 5.0 hrs</div>
-                    <div class="mt-2 flex gap-2">
-                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">765 Resolved</span>
-                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">89% Satisfaction</span>
-                    </div>
-                  </div>
-                  <div class="text-2xl font-bold text-gray-600">89%</div>
-                </div>
-                <div class="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-100">
-                  <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold">5</span>
-                  <div class="flex-1">
-                    <div class="font-bold text-lg text-gray-900">MLA Sonipat</div>
-                    <div class="text-sm text-gray-600">Resolution Rate: 85% • Response Time: 6.1 hrs</div>
-                    <div class="mt-2 flex gap-2">
-                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">654 Resolved</span>
-                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">85% Satisfaction</span>
-                    </div>
-                  </div>
-                  <div class="text-2xl font-bold text-gray-600">85%</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <!-- Urgent Problems -->
@@ -945,7 +870,7 @@
                 </div>
                 <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.</div>
                 <div class="flex gap-2 mb-3">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-red-500 text-white border-red-500">Urgent</span>
                 </div>
               </div>
             </div>
@@ -1266,44 +1191,66 @@
         });
       }
 
-      // Popup logic for Your Complaints
-      const openLeaderboardBtn = document.getElementById('openLeaderboardSidebar');
-      const closeLeaderboardBtn = document.getElementById('closeLeaderboardPopup');
-      const leaderboardPopup = document.getElementById('leaderboardPopup');
-      const leaderboardOverlay = document.getElementById('leaderboardPopupOverlay');
-      let popupOpen = false;
+      // Notifications Popup Logic
+      const notificationsBtn = document.getElementById('notificationsBtn');
+      const notificationsPopup = document.getElementById('notificationsPopup');
+      let notificationsOpen = false;
 
-      const leaderboardPanel = document.getElementById('leaderboardPopupPanel');
-      openLeaderboardBtn.addEventListener('click', (e) => {
-        leaderboardOverlay.classList.remove('hidden');
-        leaderboardPopup.classList.remove('pointer-events-none');
-        setTimeout(() => {
-          leaderboardPanel.classList.remove('translate-x-full');
-          leaderboardPanel.classList.remove('opacity-0');
-        }, 10);
-        popupOpen = true;
+      notificationsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!notificationsOpen) {
+          notificationsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.add('scale-100', 'opacity-100');
+          // Close settings if open
+          if (settingsOpen) {
+            settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            settingsPopup.classList.remove('scale-100', 'opacity-100');
+            settingsOpen = false;
+          }
+        } else {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        notificationsOpen = !notificationsOpen;
       });
 
-      function closeComplaintsModal() {
-        leaderboardPanel.classList.add('translate-x-full');
-        leaderboardPanel.classList.add('opacity-0');
-        setTimeout(() => {
-          leaderboardOverlay.classList.add('hidden');
-          leaderboardPopup.classList.add('pointer-events-none');
-        }, 300);
-        popupOpen = false;
-      }
-
-      closeLeaderboardBtn.addEventListener('click', closeComplaintsModal);
-      leaderboardOverlay.addEventListener('click', closeComplaintsModal);
-
-      document.addEventListener('mousedown', function(event) {
-        if (popupOpen && !leaderboardPanel.contains(event.target) && !openLeaderboardBtn.contains(event.target) && !event.target.closest('#leaderboardPopupPanel')) {
-          closeComplaintsModal();
+      document.addEventListener('click', (e) => {
+        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+          settingsOpen = false;
+        }
+        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+          notificationsOpen = false;
         }
       });
 
-      // Popup logic for Urgent Problems
+      // Settings Popup Logic
+      const settingsBtn = document.getElementById('settingsBtn');
+      const settingsPopup = document.getElementById('settingsPopup');
+      let settingsOpen = false;
+
+      settingsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!settingsOpen) {
+          settingsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.add('scale-100', 'opacity-100');
+          // Close notifications if open
+          if (notificationsOpen) {
+            notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            notificationsPopup.classList.remove('scale-100', 'opacity-100');
+            notificationsOpen = false;
+          }
+        } else {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        settingsOpen = !settingsOpen;
+      });
+
+      // Urgent Problems Popup Logic
       const openUrgentBtn = document.getElementById('openUrgentProblemsPopup');
       const closeUrgentBtn = document.getElementById('closeUrgentProblemsPopup');
       const urgentPopup = document.getElementById('urgentProblemsPopup');
@@ -1383,78 +1330,6 @@
           !event.target.closest('#newComplaintPanel')
         ) {
           closeNewComplaintModal();
-        }
-      });
-
-      // Settings Popup Logic
-      const settingsBtn = document.getElementById('settingsBtn');
-      const settingsPopup = document.getElementById('settingsPopup');
-      let settingsOpen = false;
-
-      settingsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!settingsOpen) {
-          settingsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
-          settingsPopup.classList.add('scale-100', 'opacity-100');
-          // Close notifications if open
-          if (notificationsOpen) {
-            notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-            notificationsPopup.classList.remove('scale-100', 'opacity-100');
-            notificationsOpen = false;
-          }
-        } else {
-          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-          settingsPopup.classList.remove('scale-100', 'opacity-100');
-        }
-        settingsOpen = !settingsOpen;
-      });
-
-      document.addEventListener('click', (e) => {
-        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
-          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-          settingsPopup.classList.remove('scale-100', 'opacity-100');
-          settingsOpen = false;
-        }
-        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
-          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-          notificationsPopup.classList.remove('scale-100', 'opacity-100');
-          notificationsOpen = false;
-        }
-      });
-
-      // Notifications Popup Logic
-      const notificationsBtn = document.getElementById('notificationsBtn');
-      const notificationsPopup = document.getElementById('notificationsPopup');
-      let notificationsOpen = false;
-
-      notificationsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!notificationsOpen) {
-          notificationsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
-          notificationsPopup.classList.add('scale-100', 'opacity-100');
-          // Close settings if open
-          if (settingsOpen) {
-            settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-            settingsPopup.classList.remove('scale-100', 'opacity-100');
-            settingsOpen = false;
-          }
-        } else {
-          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-          notificationsPopup.classList.remove('scale-100', 'opacity-100');
-        }
-        notificationsOpen = !notificationsOpen;
-      });
-
-      document.addEventListener('click', (e) => {
-        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
-          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-          settingsPopup.classList.remove('scale-100', 'opacity-100');
-          settingsOpen = false;
-        }
-        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
-          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
-          notificationsPopup.classList.remove('scale-100', 'opacity-100');
-          notificationsOpen = false;
         }
       });
 
