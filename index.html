@@ -530,8 +530,58 @@
       <div class="flex items-center justify-between px-12 pt-8 pb-4">
         <h1 class="text-6xl font-extrabold text-blue-500 tracking-tight font-space-grotesk">Lokally</h1>
         <div class="flex gap-6 text-2xl text-gray-700">
-          <button class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">notifications</span></button>
-          <button class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">settings</span></button>
+          <div class="relative">
+            <button id="notificationsBtn" class="hover:bg-gray-100 rounded-full p-2 transition relative">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <div id="notificationsPopup" class="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+              <div class="py-1">
+                <div class="px-3 py-2 border-b border-gray-100">
+                  <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
+                </div>
+                <div class="max-h-96 overflow-y-auto">
+                  <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">update</span>
+                    <div class="flex-1">
+                      <p class="font-normal">Your MLA has updated the status on your complaint</p>
+                      <p class="text-xs text-gray-400 mt-0.5">2 minutes ago</p>
+                    </div>
+                  </a>
+                  <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">arrow_upward</span>
+                    <div class="flex-1">
+                      <p class="font-normal">You got 359 upvotes on your complaint</p>
+                      <p class="text-xs text-gray-400 mt-0.5">5 minutes ago</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <button id="settingsBtn" class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">settings</span></button>
+            <div id="settingsPopup" class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+              <div class="py-1">
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">person</span>
+                  <span class="font-normal">Profile Settings</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">security</span>
+                  <span class="font-normal">Security & Login</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">privacy_tip</span>
+                  <span class="font-normal">Privacy Controls</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">help</span>
+                  <span class="font-normal">Feedback & Help</span>
+                </a>
+              </div>
+            </div>
+          </div>
           <button id="logoutBtn" class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">logout</span></button>
         </div>
       </div>
@@ -1089,6 +1139,78 @@
           !event.target.closest('#newComplaintPanel')
         ) {
           closeNewComplaintModal();
+        }
+      });
+
+      // Settings Popup Logic
+      const settingsBtn = document.getElementById('settingsBtn');
+      const settingsPopup = document.getElementById('settingsPopup');
+      let settingsOpen = false;
+
+      settingsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!settingsOpen) {
+          settingsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.add('scale-100', 'opacity-100');
+          // Close notifications if open
+          if (notificationsOpen) {
+            notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            notificationsPopup.classList.remove('scale-100', 'opacity-100');
+            notificationsOpen = false;
+          }
+        } else {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        settingsOpen = !settingsOpen;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+          settingsOpen = false;
+        }
+        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+          notificationsOpen = false;
+        }
+      });
+
+      // Notifications Popup Logic
+      const notificationsBtn = document.getElementById('notificationsBtn');
+      const notificationsPopup = document.getElementById('notificationsPopup');
+      let notificationsOpen = false;
+
+      notificationsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!notificationsOpen) {
+          notificationsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.add('scale-100', 'opacity-100');
+          // Close settings if open
+          if (settingsOpen) {
+            settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            settingsPopup.classList.remove('scale-100', 'opacity-100');
+            settingsOpen = false;
+          }
+        } else {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        notificationsOpen = !notificationsOpen;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+          settingsOpen = false;
+        }
+        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+          notificationsOpen = false;
         }
       });
     </script>
