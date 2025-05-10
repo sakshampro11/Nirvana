@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nirvana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body, html {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .font-space-grotesk {
+        font-family: 'Space Grotesk', sans-serif !important;
+      }
+      /* Share Button Styles */
+      .tooltip-container {
+        position: relative;
+        display: inline-block;
+        font-family: "Arial", sans-serif;
+        overflow: visible;
+      }
+
+      .button-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        color: black;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 10;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      .button-content::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(
+          135deg,
+          rgba(110, 142, 251, 0.4),
+          rgba(167, 119, 227, 0.4)
+        );
+        filter: blur(15px);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: -1;
+      }
+
+      .button-content::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        transform: scale(0);
+        transition: transform 0.6s ease-out;
+        z-index: -1;
+      }
+
+      .button-content:hover::before {
+        opacity: 1;
+      }
+
+      .button-content:hover::after {
+        transform: scale(1);
+      }
+
+      .button-content:hover {
+        background: #f3f4f6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .button-content:active {
+        transform: translateY(-2px) scale(0.98);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      .text {
+        font-size: 14px;
+        font-weight: 600;
+        margin-right: 8px;
+        white-space: nowrap;
+        text-shadow: none;
+        transition: all 0.2s ease;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      .button-content:hover .text {
+        letter-spacing: normal;
+        color: #1f2937;
+      }
+
+      .share-icon {
+        fill: #374151;
+        width: 16px;
+        height: 16px;
+        transition: all 0.2s ease;
+        filter: none;
+      }
+
+      .button-content:hover .share-icon {
+        transform: translateY(-1px);
+        fill: #1f2937;
+      }
+
+      .tooltip-content {
+        position: absolute;
+        top: 102%;
+        left: 50%;
+        transform: translateX(-50%) scale(0.8);
+        background: white !important;
+        border-radius: 15px;
+        padding: 22px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+          transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+          visibility 0.5s ease;
+        z-index: 100;
+        pointer-events: none;
+        backdrop-filter: blur(10px);
+        border: 1px solid #e5e7eb;
+      }
+
+      .tooltip-container:hover .tooltip-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) scale(1);
+        pointer-events: auto;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: white !important;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+      }
+
+      .social-icon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(255, 255, 255, 0.8) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .social-icon:hover::before {
+        opacity: 1;
+      }
+
+      .social-icon svg {
+        width: 24px;
+        height: 24px;
+        fill: #1f2937 !important;
+        transition: all 0.2s ease;
+        z-index: 1;
+      }
+
+      .social-icon:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: #f3f4f6 !important;
+      }
+
+      .social-icon:active {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .social-icon:hover svg {
+        transform: scale(1.1);
+        fill: #1f2937 !important;
+      }
+
+      .social-icon.twitter:hover {
+        background: #f3f4f6;
+      }
+
+      .social-icon.facebook:hover {
+        background: #f3f4f6;
+      }
+
+      .social-icon.linkedin:hover {
+        background: #f3f4f6;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(110, 142, 251, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 20px rgba(110, 142, 251, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(110, 142, 251, 0);
+        }
+      }
+
+      .button-content {
+        animation: none;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      .tooltip-content::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0 10px 10px 10px;
+        border-style: solid;
+        border-color: transparent transparent white transparent !important;
+        filter: drop-shadow(0 -3px 3px rgba(0, 0, 0, 0.1));
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .tooltip-content {
+          background: rgba(30, 30, 30, 0.9);
+          color: white;
+        }
+
+        .tooltip-content::before {
+          border-color: transparent transparent rgba(30, 30, 30, 0.9) transparent;
+        }
+
+        .social-icon {
+          background: #2a2a2a;
+        }
+
+        .social-icon svg {
+          fill: #e0e0e0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .button-content,
+        .share-icon,
+        .social-icon,
+        .tooltip-content {
+          transition: none;
+        }
+
+        .button-content {
+          animation: none;
+        }
+      }
+
+      /* Animated NEW COMPLAINT Button Styles */
+      .animated-complaint-btn {
+        --primary: #2D89DA;
+        --neutral-1: #f7f8f7;
+        --neutral-2: #e7e7e7;
+        --radius: 16px;
+        cursor: pointer;
+        border-radius: var(--radius);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        border: none;
+        box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.2),
+          0 10px 20px rgba(0, 0, 0, 0.2), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.3s ease;
+        min-width: 200px;
+        padding: 20px;
+        height: 68px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-style: normal;
+        font-size: 18px;
+        font-weight: 600;
+        background: #2D89DA !important;
+        color: #fff !important;
+        z-index: 10;
+      }
+      .animated-complaint-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+          0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 3px -3px rgba(0, 0, 0, 0.04);
+      }
+      .animated-complaint-btn:active {
+        transform: scale(1);
+        box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+          0 10px 3px -3px rgba(0, 0, 0, 0.2);
+      }
+      .animated-complaint-btn:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius);
+        border: 2.5px solid #2D89DA;
+        background: transparent !important;
+        z-index: 0;
+        transition: all 0.4s ease;
+      }
+      .animated-complaint-btn:hover::after {
+        transform: scale(1.05, 1.1);
+        box-shadow: inset 0 -1px 3px 0 rgba(0, 0, 0, 0.7);
+      }
+      .animated-complaint-btn::before {
+        content: "";
+        inset: 7px 6px 6px 6px;
+        position: absolute;
+        background: transparent !important;
+        border-radius: 12px;
+        filter: blur(0.5px);
+        z-index: 2;
+      }
+      .animated-complaint-btn .state {
+        padding-left: 29px;
+        z-index: 2;
+        display: flex;
+        position: relative;
+      }
+      .animated-complaint-btn .state p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+      }
+      .animated-complaint-btn .state .icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        transform: scale(1.25);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+      .animated-complaint-btn .state .icon svg {
+        width: 24px;
+        height: 24px;
+        fill: #fff;
+      }
+      .animated-complaint-btn .outline {
+        position: absolute;
+        border-radius: inherit;
+        overflow: hidden;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        inset: -2px -3.5px;
+      }
+      .animated-complaint-btn .outline::before {
+        content: "";
+        position: absolute;
+        inset: -100%;
+        background: conic-gradient(
+          from 180deg,
+          transparent 60%,
+          #45A8FF 80%,
+          transparent 100%
+        );
+        animation: spin 2s linear infinite;
+        animation-play-state: paused;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .animated-complaint-btn:hover .outline {
+        opacity: 1;
+      }
+      .animated-complaint-btn:hover .outline::before {
+        animation-play-state: running;
+      }
+      /* Letters Animation for NEW COMPLAINT */
+      .animated-complaint-btn .state p span {
+        display: block;
+        opacity: 0;
+        animation: slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+      }
+      .animated-complaint-btn:hover .state p span {
+        opacity: 1;
+        animation: wave 0.5s ease forwards calc(var(--i) * 0.02s);
+      }
+      @keyframes wave {
+        30% {
+          opacity: 1;
+          transform: translateY(4px) translateX(0) rotate(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-3px) translateX(0) rotate(0);
+          color: var(--primary);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) translateX(0) rotate(0);
+        }
+      }
+      @keyframes slideDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px) translateX(5px) rotate(-90deg);
+          color: var(--primary);
+          filter: blur(5px);
+        }
+        30% {
+          opacity: 1;
+          transform: translateY(4px) translateX(0) rotate(0);
+          filter: blur(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-3px) translateX(0) rotate(0);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) translateX(0) rotate(0);
+        }
+      }
+      /* Logout Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        min-width: 320px;
+        text-align: center;
+        border: 2px solid #000;
+      }
+      .modal-box h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+      .modal-btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .modal-btn.yes {
+        background: #2D89DA;
+        color: #fff;
+      }
+      .modal-btn.yes:hover {
+        background: #1766b3;
+      }
+      .modal-btn.no {
+        background: #f3f4f6;
+        color: #222;
+      }
+      .modal-btn.no:hover {
+        background: #e5e7eb;
+      }
+      /* File Upload Styles */
+      .custum-file-upload {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        gap: 20px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #e8e8e8;
+        background-color: #212121;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0px 48px 35px -48px #e8e8e8;
+        transition: all 0.3s ease;
+      }
+
+      .custum-file-upload:hover {
+        border-color: #2D89DA;
+        background-color: #1a1a1a;
+      }
+
+      .custum-file-upload .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .custum-file-upload .icon svg {
+        height: 80px;
+        fill: #e8e8e8;
+        transition: all 0.3s ease;
+      }
+
+      .custum-file-upload:hover .icon svg {
+        fill: #2D89DA;
+      }
+
+      .custum-file-upload .text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .custum-file-upload .text span {
+        font-weight: 400;
+        color: #e8e8e8;
+        transition: all 0.3s ease;
+      }
+
+      .custum-file-upload:hover .text span {
+        color: #2D89DA;
+      }
+
+      .custum-file-upload input {
+        display: none;
+      }
+
+      /* Status Select Styles */
+      .status-select {
+        color: #374151;
+        font-weight: 600;
+        padding-right: 20px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0 center;
+        background-size: 16px;
+        min-width: 120px;
+        transition: all 0.2s ease;
+      }
+
+      .status-select option[value=""] {
+        color: #6B7280;
+      }
+
+      .status-select option[value="unresolved"] {
+        color: #9CA3AF;
+      }
+
+      .status-select option[value="inprogress"] {
+        color: #F59E0B;
+      }
+
+      .status-select option[value="resolved"] {
+        color: #10B981;
+      }
+
+      .status-select:focus {
+        outline: none;
+        color: #2D89DA;
+      }
+
+      .status-select:hover {
+        color: #2D89DA;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-white">
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 z-30 bg-white flex flex-col shadow-sm" style="backdrop-filter: blur(4px);">
+      <div class="flex items-center justify-between px-12 pt-8 pb-4">
+        <h1 class="text-6xl font-extrabold text-blue-500 tracking-tight font-space-grotesk">Lokally</h1>
+        <div class="flex gap-6 text-2xl text-gray-700">
+          <div class="relative">
+            <button id="notificationsBtn" class="hover:bg-gray-100 rounded-full p-2 transition relative">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <div id="notificationsPopup" class="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+              <div class="py-1">
+                <div class="px-3 py-2 border-b border-gray-100">
+                  <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
+                </div>
+                <div class="max-h-96 overflow-y-auto">
+                  <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">update</span>
+                    <div class="flex-1">
+                      <p class="font-normal">Your MLA has updated the status on your complaint</p>
+                      <p class="text-xs text-gray-400 mt-0.5">2 minutes ago</p>
+                    </div>
+                  </a>
+                  <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">arrow_upward</span>
+                    <div class="flex-1">
+                      <p class="font-normal">You got 359 upvotes on your complaint</p>
+                      <p class="text-xs text-gray-400 mt-0.5">5 minutes ago</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <button id="settingsBtn" class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">settings</span></button>
+            <div id="settingsPopup" class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transform scale-95 opacity-0 transition-all duration-200 origin-top-right pointer-events-none z-50">
+              <div class="py-1">
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">person</span>
+                  <span class="font-normal">Profile Settings</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">security</span>
+                  <span class="font-normal">Security & Login</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">privacy_tip</span>
+                  <span class="font-normal">Privacy Controls</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
+                  <span class="material-symbols-outlined text-gray-400 text-base">help</span>
+                  <span class="font-normal">Feedback & Help</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <button id="logoutBtn" class="hover:bg-gray-100 rounded-full p-2 transition"><span class="material-symbols-outlined">logout</span></button>
+        </div>
+      </div>
+      <!-- Top Section with All -->
+      <div class="flex items-center gap-4 px-12 pb-2"></div>
+    </div>
+    <!-- Main Content -->
+    <div class="flex gap-8 px-12 mt-48">
+      <!-- Complaints List -->
+      <div class="flex-1 bg-white rounded-2xl border-2 border-black p-8 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-3xl font-bold text-gray-800 tracking-tight font-space-grotesk">Complaints</h2>
+          <div class="flex gap-2">
+            <select id="urgencyFilter" class="border rounded-lg px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
+              <option value="all">All</option>
+              <option value="Urgent">Urgent</option>
+              <option value="Daily">Daily</option>
+              <option value="Long-Term">Long-Term</option>
+            </select>
+            <select id="typeFilter" class="border rounded-lg px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200">
+              <option value="all">All</option>
+              <option value="Road">Road</option>
+              <option value="Water">Water</option>
+              <option value="Electric">Electric</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+        <div id="complaintsList" class="space-y-8">
+          <!-- Complaints will be rendered here by JS -->
+        </div>
+      </div>
+      <!-- Sidebar -->
+      <div class="w-96 flex flex-col gap-4">
+        <!-- Profile Card -->
+        <div class="rounded-2xl border-2 border-black p-0 flex flex-col items-start bg-white shadow-sm" style="box-shadow:none;">
+          <div class="w-full h-16 bg-blue-100 rounded-t-2xl"></div>
+          <img
+            src="https://randomuser.me/api/portraits/men/32.jpg"
+            alt="profile"
+            class="w-16 h-16 rounded-full border-2 border-white shadow -mt-8 ml-6"
+          />
+          <div class="text-left w-full px-6 pb-4 pt-2">
+            <div class="font-bold text-xl mb-1">Rakesh Sharma</div>
+            <div class="text-gray-700 text-base mb-1">MLA Faridabad</div>
+            <div class="text-blue-500 text-sm">Location, Locality</div>
+          </div>
+        </div>
+        <!-- Your Complaints -->
+        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="yourComplaintsCard">
+          <button id="openComplaintsSidebar" class="font-bold text-lg mb-2 block text-left w-full hover:text-blue-500 transition-colors duration-200 cursor-pointer focus:outline-none">
+            Your Complaints
+          </button>
+          <div class="flex justify-between text-sm mb-1">
+            <span>Water Drainage</span>
+            <span class="text-gray-500">3hrs ago</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span>Pipeline</span>
+            <span class="text-gray-500">4days ago</span>
+          </div>
+        </div>
+        <!-- Modal Popup for Your Complaints -->
+        <div id="complaintsPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+        <div id="complaintsPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
+          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="complaintsPopupPanel">
+            <div class="flex justify-between items-center p-4 border-b">
+              <span class="font-bold text-xl">Your Complaints</span>
+              <button id="closeComplaintsPopup" class="text-2xl font-bold text-gray-500 hover:text-blue-500">&times;</button>
+            </div>
+            <div class="p-4 flex-1 overflow-auto space-y-4">
+              <!-- Two complaints from the feed -->
+              <div class="border rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">Yash Kaul</span>
+                  <span class="text-xs text-gray-400">2d ago</span>
+                  <span class="ml-1">🔥</span>
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                </div>
+              </div>
+              <div class="border rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">Saanvi Karka</span>
+                  <span class="text-xs text-gray-400">2d ago</span>
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Faridabad, india open garbage disposal is huge problem here, however no one pay attention to it.</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Urgent Problems -->
+        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="urgentProblemsCard">
+          <button id="openUrgentProblemsPopup" class="font-bold text-lg mb-2 block text-left w-full hover:text-red-500 transition-colors duration-200 cursor-pointer focus:outline-none">
+            Urgent Problems
+          </button>
+          <div class="flex justify-between text-sm mb-1">
+            <span>Water Drainage</span>
+            <span class="text-gray-500">3hrs ago</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span>Pipeline</span>
+            <span class="text-gray-500">4days ago</span>
+          </div>
+        </div>
+        <!-- Modal Popup for Urgent Problems -->
+        <div id="urgentProblemsPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+        <div id="urgentProblemsPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
+          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="urgentProblemsPopupPanel">
+            <div class="flex justify-between items-center p-4 border-b">
+              <span class="font-bold text-xl">Urgent Problems</span>
+              <button id="closeUrgentProblemsPopup" class="text-2xl font-bold text-gray-500 hover:text-red-500">&times;</button>
+            </div>
+            <div class="p-4 flex-1 overflow-auto space-y-4">
+              <!-- Urgent complaint from the feed -->
+              <div class="border rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">Yash Kaul</span>
+                  <span class="text-xs text-gray-400">2d ago</span>
+                  <span class="ml-1">🔥</span>
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Floating New Complaint Button -->
+    <button id="openNewComplaint" class="fixed bottom-8 right-12 z-40 animated-complaint-btn">
+      <span class="outline"></span>
+      <span class="state">
+        <span class="icon">
+          <span class="material-symbols-outlined text-2xl" style="color:#fff;">add</span>
+        </span>
+        <p>
+          <span style="--i:0">N</span>
+          <span style="--i:1">E</span>
+          <span style="--i:2">W</span>
+          <span style="--i:3"> </span>
+          <span style="--i:4">C</span>
+          <span style="--i:5">O</span>
+          <span style="--i:6">M</span>
+          <span style="--i:7">P</span>
+          <span style="--i:8">L</span>
+          <span style="--i:9">A</span>
+          <span style="--i:10">I</span>
+          <span style="--i:11">N</span>
+          <span style="--i:12">T</span>
+        </p>
+      </span>
+    </button>
+    <!-- Logout Modal -->
+    <div id="logoutModal" class="modal-overlay" style="display:none;">
+      <div class="modal-box">
+        <h2>Are you sure you want to log out?</h2>
+        <div class="modal-actions">
+          <button class="modal-btn yes" id="confirmLogout">Yes</button>
+          <button class="modal-btn no" id="cancelLogout">No</button>
+        </div>
+      </div>
+    </div>
+    <!-- Overlay for New Complaint Modal -->
+    <div id="newComplaintOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+    <!-- New Complaint Modal -->
+    <div id="newComplaintModal" class="fixed inset-0 flex items-end justify-start z-50 pointer-events-none px-12">
+      <div id="newComplaintPanel"
+        class="bg-white rounded-2xl shadow-2xl border border-gray-200 transform translate-y-full opacity-0 transition-all duration-300 pointer-events-auto relative mb-16"
+        style="width: 149.76rem; height: 40rem;"
+      >
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold">Create New Complaint</h2>
+            <button class="border px-3 py-1 rounded-full text-xs font-semibold">Drafts</button>
+          </div>
+          <div class="flex border-b mb-4">
+            <button id="textTabBtn" class="px-4 py-2 font-semibold border-b-2 border-blue-500 text-blue-600">Text</button>
+            <button id="imagesTabBtn" class="px-4 py-2 font-semibold text-gray-500">Images & Video</button>
+          </div>
+          <div id="textTab" class="tab-content">
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Title</label>
+              <input type="text" maxlength="300" class="w-full border rounded-md px-3 py-2" placeholder="Enter text here..." />
+              <div class="text-right text-xs text-gray-400 mt-1">0/300</div>
+            </div>
+            <div class="mb-4 flex items-center gap-2">
+              <button class="border px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-base">add</span>
+                Add Tag
+              </button>
+            </div>
+            <div class="mb-8">
+              <label class="block text-sm font-medium mb-1">Describe your problem</label>
+              <textarea class="w-full border rounded-md px-3 py-2" rows="3" placeholder="Enter text here..."></textarea>
+            </div>
+          </div>
+          <div id="imagesTab" class="tab-content hidden">
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Title</label>
+              <input type="text" maxlength="300" class="w-full border rounded-md px-3 py-2" placeholder="Enter text here..." />
+              <div class="text-right text-xs text-gray-400 mt-1">0/300</div>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Upload Images/Video</label>
+              <label for="file" class="custum-file-upload">
+                <div class="icon">
+                  <svg viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" fill=""></path>
+                    </g>
+                  </svg>
+                </div>
+                <div class="text">
+                  <span>Click to upload image</span>
+                </div>
+                <input id="file" type="file" accept="image/*,video/*">
+              </label>
+            </div>
+            <div class="mb-8">
+              <label class="block text-sm font-medium mb-1">Describe your problem</label>
+              <textarea class="w-full border rounded-md px-3 py-2" rows="3" placeholder="Enter text here..."></textarea>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button class="border px-4 py-2 rounded-md text-gray-700 font-semibold flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">save</span>
+              Save Draft
+            </button>
+            <button class="bg-blue-500 text-white px-6 py-2 rounded-md font-semibold">Post</button>
+          </div>
+        </div>
+      </div>
+      <!-- Cancel button outside the modal panel -->
+      <div class="flex items-end justify-end" style="width: 100%; height: 40rem; margin-right: 6rem;">
+        <button id="closeNewComplaint" class="hidden bg-blue-500 text-white px-8 py-3 rounded-lg font-bold text-lg shadow hover:bg-blue-600 transition self-end">
+          CANCEL
+        </button>
+      </div>
+    </div>
+    <script>
+      // Complaints data
+      const complaints = [
+        {
+          id: 1,
+          user: "Yash Kaul",
+          time: "2d ago",
+          fire: true,
+          text:
+            "Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.",
+          status: ["Unresolved", "Urgent"],
+          upvotes: 359,
+          comments: 37,
+          image:
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=200&q=80",
+          type: "Water"
+        },
+        {
+          id: 2,
+          user: "Saanvi Karka",
+          time: "2d ago",
+          fire: false,
+          text:
+            "Faridabad, india open garbage disposal is huge problem here, however no one pay attention to it.",
+          status: ["Unresolved", "Long-Term"],
+          upvotes: 63,
+          comments: 37,
+          image:
+            "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=200&q=80",
+          type: "Road"
+        },
+        {
+          id: 3,
+          user: "Riya raj",
+          time: "2d ago",
+          fire: false,
+          text:
+            "Residents Struggle with Frequent Power Cuts, Urge Immediate Action . Unresolved Electricity Outages Disrupt Daily Life in Local Neighborhood.",
+          status: ["Unresolved", "Daily"],
+          upvotes: 21,
+          comments: 37,
+          image:
+            "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=200&q=80",
+          type: "Electric"
+        },
+      ];
+
+      // Render complaints
+      function renderComplaints(filterUrgency = 'all', filterType = 'all') {
+        const list = document.getElementById('complaintsList');
+        list.innerHTML = '';
+        let filtered = complaints.filter(c => {
+          let urgencyMatch = filterUrgency === 'all' || c.status.includes(filterUrgency);
+          let typeMatch = filterType === 'all' || c.type === filterType;
+          return urgencyMatch && typeMatch;
+        });
+        // Sort complaints by upvotes in descending order
+        filtered.sort((a, b) => b.upvotes - a.upvotes);
+
+        // Find the maximum upvotes
+        const maxUpvotes = filtered.length > 0 ? Math.max(...filtered.map(c => c.upvotes)) : 0;
+
+        if (filtered.length === 0) {
+          list.innerHTML = '<div class="text-center text-gray-400 py-8">No complaints found.</div>';
+          return;
+        }
+        filtered.forEach(c => {
+          const upvoteBtnClass = 'upvote-btn flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 font-semibold text-sm shadow-sm hover:bg-yellow-200 transition';
+          const statusHtml = c.status.map(s => {
+            let cls =
+              s === "Urgent"
+                ? "bg-red-500 text-white border-red-500"
+                : s === "Pending"
+                ? "bg-yellow-200 text-gray-800 border-yellow-400"
+                : s === "In Progress"
+                ? "bg-gray-200 text-gray-800 border-gray-400"
+                : s === "Long-Term"
+                ? "bg-gray-100 text-gray-800 border-gray-300"
+                : s === "Resolved"
+                ? "bg-blue-200 text-gray-800 border-blue-400"
+                : s === "Daily"
+                ? "bg-white text-blue-700 border-blue-400"
+                : "bg-gray-100 text-gray-800 border-gray-300";
+            return `<span class="px-3 py-1 rounded-full text-xs font-semibold border ${cls}">${s}</span>`;
+          }).join(' ');
+          list.innerHTML += `
+            <div class="flex items-start gap-4 border-b pb-6 last:border-b-0">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">${c.user}</span>
+                  <span class="text-xs text-gray-400">${c.time}</span>
+                  ${c.fire ? '<span class="ml-1">🔥</span>' : ''}
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">${c.text}</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                </div>
+                <div class="flex gap-3 items-center">
+                  <div class="flex items-center gap-1 px-3 py-1 rounded-full ${c.upvotes === maxUpvotes ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-700'} font-semibold text-sm">
+                    <span class="material-symbols-outlined text-base">arrow_upward</span>
+                    <span>Upvotes: ${c.upvotes}</span>
+                  </div>
+                  <button class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
+                    <span class="material-symbols-outlined text-base">chat_bubble</span>
+                    ${c.comments}
+                  </button>
+                  <div class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
+                    <span class="material-symbols-outlined text-base">update</span>
+                    <select class="status-select bg-transparent border-none focus:outline-none focus:ring-0 cursor-pointer" onchange="updateComplaintStatus(this, ${c.id})">
+                      <option value="" disabled ${!c.status[0] ? 'selected' : ''}>Status Update</option>
+                      <option value="unresolved" ${c.status[0] === 'Unresolved' ? 'selected' : ''}>Unresolved</option>
+                      <option value="inprogress" ${c.status[0] === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                      <option value="resolved" ${c.status[0] === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-end gap-2">
+                <a href="#" class="text-blue-600 font-semibold text-sm hover:underline">View More</a>
+                <img src="${c.image}" alt="complaint" class="w-24 h-16 object-cover rounded-lg shadow" />
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      // Filtering logic
+      const urgencyFilter = document.getElementById('urgencyFilter');
+      const typeFilter = document.getElementById('typeFilter');
+      function updateComplaints() {
+        renderComplaints(urgencyFilter.value, typeFilter.value);
+      }
+      urgencyFilter.addEventListener('change', updateComplaints);
+      typeFilter.addEventListener('change', updateComplaints);
+      // Initial render
+      renderComplaints();
+      console.log('Page loaded!');
+
+      // Logout Modal Logic
+      const logoutBtn = document.getElementById('logoutBtn');
+      const logoutModal = document.getElementById('logoutModal');
+      const confirmLogout = document.getElementById('confirmLogout');
+      const cancelLogout = document.getElementById('cancelLogout');
+      if (logoutBtn && logoutModal && confirmLogout && cancelLogout) {
+        logoutBtn.addEventListener('click', () => {
+          logoutModal.style.display = 'flex';
+        });
+        cancelLogout.addEventListener('click', () => {
+          logoutModal.style.display = 'none';
+        });
+        confirmLogout.addEventListener('click', () => {
+          window.location.href = 'landing.html';
+        });
+      }
+
+      // Popup logic for Your Complaints
+      const openBtn = document.getElementById('openComplaintsSidebar');
+      const closeBtn = document.getElementById('closeComplaintsPopup');
+      const popup = document.getElementById('complaintsPopup');
+      const overlay = document.getElementById('complaintsPopupOverlay');
+      let popupOpen = false;
+
+      const popupPanel = document.getElementById('complaintsPopupPanel');
+      openBtn.addEventListener('click', (e) => {
+        overlay.classList.remove('hidden');
+        popup.classList.remove('pointer-events-none');
+        setTimeout(() => {
+          popupPanel.classList.remove('translate-x-full');
+          popupPanel.classList.remove('opacity-0');
+        }, 10);
+        popupOpen = true;
+      });
+
+      function closeComplaintsModal() {
+        popupPanel.classList.add('translate-x-full');
+        popupPanel.classList.add('opacity-0');
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          popup.classList.add('pointer-events-none');
+        }, 300);
+        popupOpen = false;
+      }
+
+      closeBtn.addEventListener('click', closeComplaintsModal);
+      overlay.addEventListener('click', closeComplaintsModal);
+
+      document.addEventListener('mousedown', function(event) {
+        if (popupOpen && !popupPanel.contains(event.target) && !openBtn.contains(event.target) && !event.target.closest('#complaintsPopupPanel')) {
+          closeComplaintsModal();
+        }
+      });
+
+      // Popup logic for Urgent Problems
+      const openUrgentBtn = document.getElementById('openUrgentProblemsPopup');
+      const closeUrgentBtn = document.getElementById('closeUrgentProblemsPopup');
+      const urgentPopup = document.getElementById('urgentProblemsPopup');
+      const urgentOverlay = document.getElementById('urgentProblemsPopupOverlay');
+      let urgentPopupOpen = false;
+
+      const urgentPopupPanel = document.getElementById('urgentProblemsPopupPanel');
+      openUrgentBtn.addEventListener('click', (e) => {
+        urgentOverlay.classList.remove('hidden');
+        urgentPopup.classList.remove('pointer-events-none');
+        setTimeout(() => {
+          urgentPopupPanel.classList.remove('translate-x-full');
+          urgentPopupPanel.classList.remove('opacity-0');
+        }, 10);
+        urgentPopupOpen = true;
+      });
+
+      function closeUrgentModal() {
+        urgentPopupPanel.classList.add('translate-x-full');
+        urgentPopupPanel.classList.add('opacity-0');
+        setTimeout(() => {
+          urgentOverlay.classList.add('hidden');
+          urgentPopup.classList.add('pointer-events-none');
+        }, 300);
+        urgentPopupOpen = false;
+      }
+
+      closeUrgentBtn.addEventListener('click', closeUrgentModal);
+      urgentOverlay.addEventListener('click', closeUrgentModal);
+
+      document.addEventListener('mousedown', function(event) {
+        if (urgentPopupOpen && !urgentPopupPanel.contains(event.target) && !openUrgentBtn.contains(event.target) && !event.target.closest('#urgentProblemsPopupPanel')) {
+          closeUrgentModal();
+        }
+      });
+
+      // New Complaint Modal logic
+      const openNewComplaintBtn = document.getElementById('openNewComplaint');
+      const closeNewComplaintBtn = document.getElementById('closeNewComplaint');
+      const newComplaintModal = document.getElementById('newComplaintModal');
+      const newComplaintPanel = document.getElementById('newComplaintPanel');
+      const newComplaintOverlay = document.getElementById('newComplaintOverlay');
+      let newComplaintOpen = false;
+
+      openNewComplaintBtn.addEventListener('click', () => {
+        newComplaintOverlay.classList.remove('hidden');
+        newComplaintModal.classList.remove('pointer-events-none');
+        setTimeout(() => {
+          newComplaintPanel.classList.remove('translate-y-full');
+          newComplaintPanel.classList.remove('opacity-0');
+          setTimeout(() => {
+            closeNewComplaintBtn.classList.remove('hidden');
+          }, 300);
+        }, 10);
+        newComplaintOpen = true;
+      });
+
+      function closeNewComplaintModal() {
+        newComplaintPanel.classList.add('translate-y-full');
+        newComplaintPanel.classList.add('opacity-0');
+        closeNewComplaintBtn.classList.add('hidden');
+        setTimeout(() => {
+          newComplaintOverlay.classList.add('hidden');
+          newComplaintModal.classList.add('pointer-events-none');
+        }, 300);
+        newComplaintOpen = false;
+      }
+
+      closeNewComplaintBtn.addEventListener('click', closeNewComplaintModal);
+      newComplaintOverlay.addEventListener('click', closeNewComplaintModal);
+
+      document.addEventListener('mousedown', function(event) {
+        if (
+          newComplaintOpen &&
+          !newComplaintPanel.contains(event.target) &&
+          !openNewComplaintBtn.contains(event.target) &&
+          !event.target.closest('#newComplaintPanel')
+        ) {
+          closeNewComplaintModal();
+        }
+      });
+
+      // Settings Popup Logic
+      const settingsBtn = document.getElementById('settingsBtn');
+      const settingsPopup = document.getElementById('settingsPopup');
+      let settingsOpen = false;
+
+      settingsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!settingsOpen) {
+          settingsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.add('scale-100', 'opacity-100');
+          // Close notifications if open
+          if (notificationsOpen) {
+            notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            notificationsPopup.classList.remove('scale-100', 'opacity-100');
+            notificationsOpen = false;
+          }
+        } else {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        settingsOpen = !settingsOpen;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+          settingsOpen = false;
+        }
+        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+          notificationsOpen = false;
+        }
+      });
+
+      // Notifications Popup Logic
+      const notificationsBtn = document.getElementById('notificationsBtn');
+      const notificationsPopup = document.getElementById('notificationsPopup');
+      let notificationsOpen = false;
+
+      notificationsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!notificationsOpen) {
+          notificationsPopup.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.add('scale-100', 'opacity-100');
+          // Close settings if open
+          if (settingsOpen) {
+            settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            settingsPopup.classList.remove('scale-100', 'opacity-100');
+            settingsOpen = false;
+          }
+        } else {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+        }
+        notificationsOpen = !notificationsOpen;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (settingsOpen && !settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+          settingsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          settingsPopup.classList.remove('scale-100', 'opacity-100');
+          settingsOpen = false;
+        }
+        if (notificationsOpen && !notificationsPopup.contains(e.target) && !notificationsBtn.contains(e.target)) {
+          notificationsPopup.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+          notificationsPopup.classList.remove('scale-100', 'opacity-100');
+          notificationsOpen = false;
+        }
+      });
+
+      // Tab switching logic
+      const textTabBtn = document.getElementById('textTabBtn');
+      const imagesTabBtn = document.getElementById('imagesTabBtn');
+      const textTab = document.getElementById('textTab');
+      const imagesTab = document.getElementById('imagesTab');
+
+      textTabBtn.addEventListener('click', () => {
+        textTabBtn.classList.add('border-b-2', 'border-blue-500', 'text-blue-600');
+        textTabBtn.classList.remove('text-gray-500');
+        imagesTabBtn.classList.remove('border-b-2', 'border-blue-500', 'text-blue-600');
+        imagesTabBtn.classList.add('text-gray-500');
+        textTab.classList.remove('hidden');
+        imagesTab.classList.add('hidden');
+      });
+
+      imagesTabBtn.addEventListener('click', () => {
+        imagesTabBtn.classList.add('border-b-2', 'border-blue-500', 'text-blue-600');
+        imagesTabBtn.classList.remove('text-gray-500');
+        textTabBtn.classList.remove('border-b-2', 'border-blue-500', 'text-blue-600');
+        textTabBtn.classList.add('text-gray-500');
+        imagesTab.classList.remove('hidden');
+        textTab.classList.add('hidden');
+      });
+
+      // Update complaint status
+      function updateComplaintStatus(select, complaintId) {
+        const newStatus = select.value;
+        if (!newStatus) return; // Don't update if "Status Update" is selected
+        
+        const statusText = newStatus === 'unresolved' ? 'Unresolved' : 
+                          newStatus === 'inprogress' ? 'In Progress' : 'Resolved';
+        
+        // Update the complaint status in the data
+        const complaint = complaints.find(c => c.id === complaintId);
+        if (complaint) {
+          // Keep the urgency/type status and update the resolution status
+          const urgencyStatus = complaint.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term');
+          complaint.status = [statusText, urgencyStatus];
+          
+          // Update the select element to show the new status
+          select.value = newStatus;
+          
+          // Re-render the complaints to update the UI
+          renderComplaints(urgencyFilter.value, typeFilter.value);
+        }
+      }
+    </script>
+  </body>
+</html>
