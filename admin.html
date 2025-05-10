@@ -620,6 +620,88 @@
       .status-select:hover {
         color: #2D89DA;
       }
+
+      /* Expandable Card Styles */
+      .expandable-card {
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      
+      .expandable-card-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        background: white;
+        border-radius: 0 0 0.5rem 0.5rem;
+      }
+      
+      .expandable-card.expanded .expandable-card-content {
+        max-height: 500px;
+        transition: max-height 0.5s ease-in;
+      }
+      
+      .expand-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #2D89DA;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .expand-button:hover {
+        color: #1a6cb3;
+      }
+      
+      .expand-button .material-symbols-outlined {
+        transition: transform 0.3s ease;
+      }
+      
+      .expandable-card.expanded .expand-button .material-symbols-outlined {
+        transform: rotate(180deg);
+      }
+      
+      .expanded-content {
+        padding: 1rem;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 1rem;
+      }
+      
+      .expanded-content-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      
+      .expanded-content-item {
+        background: white;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+      
+      .expanded-content-item h4 {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+      }
+      
+      .expanded-content-item p {
+        color: #6B7280;
+        font-size: 0.875rem;
+      }
+
+      /* Expanded image styles */
+      .expanded-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+      }
     </style>
   </head>
   <body class="min-h-screen bg-white">
@@ -640,17 +722,17 @@
                 </div>
                 <div class="max-h-96 overflow-y-auto">
                   <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
-                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">update</span>
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">add_circle</span>
                     <div class="flex-1">
-                      <p class="font-normal">Your MLA has updated the status on your complaint</p>
-                      <p class="text-xs text-gray-400 mt-0.5">2 minutes ago</p>
+                      <p class="font-normal">Four new complaints have been added</p>
+                      <p class="text-xs text-gray-400 mt-0.5">10 minutes ago</p>
                     </div>
                   </a>
                   <a href="#" class="flex items-start gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition">
-                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">arrow_upward</span>
+                    <span class="material-symbols-outlined text-gray-400 text-base mt-0.5">warning</span>
                     <div class="flex-1">
-                      <p class="font-normal">You got 359 upvotes on your complaint</p>
-                      <p class="text-xs text-gray-400 mt-0.5">5 minutes ago</p>
+                      <p class="font-normal">A complaint has reached urgent status</p>
+                      <p class="text-xs text-gray-400 mt-0.5">15 minutes ago</p>
                     </div>
                   </a>
                 </div>
@@ -728,51 +810,103 @@
             <div class="text-blue-500 text-sm">Location, Locality</div>
           </div>
         </div>
-        <!-- Your Complaints -->
-        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="yourComplaintsCard">
-          <button id="openComplaintsSidebar" class="font-bold text-lg mb-2 block text-left w-full hover:text-blue-500 transition-colors duration-200 cursor-pointer focus:outline-none">
-            Your Complaints
+        <!-- Leaderboard Ranking -->
+        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="leaderboardCard">
+          <button id="openLeaderboardSidebar" class="font-bold text-lg mb-2 block text-left w-full hover:text-blue-500 transition-colors duration-200 cursor-pointer focus:outline-none">
+            MLA Performance Ranking
           </button>
           <div class="flex justify-between text-sm mb-1">
-            <span>Water Drainage</span>
-            <span class="text-gray-500">3hrs ago</span>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-yellow-400 flex items-center justify-center text-xs font-bold">1</span>
+              <span>MLA Gurgaon</span>
+            </div>
+            <span class="text-yellow-600 font-semibold">98%</span>
+          </div>
+          <div class="flex justify-between text-sm mb-1">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold">2</span>
+              <span>MLA Faridabad</span>
+            </div>
+            <span class="text-gray-600 font-semibold">95%</span>
           </div>
           <div class="flex justify-between text-sm">
-            <span>Pipeline</span>
-            <span class="text-gray-500">4days ago</span>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold text-white">3</span>
+              <span>MLA Noida</span>
+            </div>
+            <span class="text-amber-600 font-semibold">92%</span>
           </div>
         </div>
-        <!-- Modal Popup for Your Complaints -->
-        <div id="complaintsPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
-        <div id="complaintsPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
-          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="complaintsPopupPanel">
+        <!-- Modal Popup for Leaderboard -->
+        <div id="leaderboardPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+        <div id="leaderboardPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
+          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="leaderboardPopupPanel">
             <div class="flex justify-between items-center p-4 border-b">
-              <span class="font-bold text-xl">Your Complaints</span>
-              <button id="closeComplaintsPopup" class="text-2xl font-bold text-gray-500 hover:text-blue-500">&times;</button>
+              <span class="font-bold text-xl">MLA Performance Rankings</span>
+              <button id="closeLeaderboardPopup" class="text-2xl font-bold text-gray-500 hover:text-blue-500">&times;</button>
             </div>
             <div class="p-4 flex-1 overflow-auto space-y-4">
-              <!-- Two complaints from the feed -->
-              <div class="border rounded-lg p-4 shadow-sm">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
-                  <span class="font-semibold text-gray-800 text-sm">Yash Kaul</span>
-                  <span class="text-xs text-gray-400">2d ago</span>
-                  <span class="ml-1">🔥</span>
+              <!-- Top MLAs -->
+              <div class="space-y-4">
+                <div class="flex items-center gap-4 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                  <span class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-lg font-bold">1</span>
+                  <div class="flex-1">
+                    <div class="font-bold text-lg text-gray-900">MLA Gurgaon</div>
+                    <div class="text-sm text-gray-600">Resolution Rate: 98% • Response Time: 2.3 hrs</div>
+                    <div class="mt-2 flex gap-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">1,234 Resolved</span>
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">98% Satisfaction</span>
+                    </div>
+                  </div>
+                  <div class="text-2xl font-bold text-yellow-600">98%</div>
                 </div>
-                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.</div>
-                <div class="flex gap-2 mb-3">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                  <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold">2</span>
+                  <div class="flex-1">
+                    <div class="font-bold text-lg text-gray-900">MLA Faridabad</div>
+                    <div class="text-sm text-gray-600">Resolution Rate: 95% • Response Time: 3.1 hrs</div>
+                    <div class="mt-2 flex gap-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">987 Resolved</span>
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">95% Satisfaction</span>
+                    </div>
+                  </div>
+                  <div class="text-2xl font-bold text-gray-600">95%</div>
                 </div>
-              </div>
-              <div class="border rounded-lg p-4 shadow-sm">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
-                  <span class="font-semibold text-gray-800 text-sm">Saanvi Karka</span>
-                  <span class="text-xs text-gray-400">2d ago</span>
+                <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-lg border border-amber-100">
+                  <span class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-lg font-bold text-white">3</span>
+                  <div class="flex-1">
+                    <div class="font-bold text-lg text-gray-900">MLA Noida</div>
+                    <div class="text-sm text-gray-600">Resolution Rate: 92% • Response Time: 4.2 hrs</div>
+                    <div class="mt-2 flex gap-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">876 Resolved</span>
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">92% Satisfaction</span>
+                    </div>
+                  </div>
+                  <div class="text-2xl font-bold text-amber-600">92%</div>
                 </div>
-                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Faridabad, india open garbage disposal is huge problem here, however no one pay attention to it.</div>
-                <div class="flex gap-2 mb-3">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                <div class="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-100">
+                  <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold">4</span>
+                  <div class="flex-1">
+                    <div class="font-bold text-lg text-gray-900">MLA Ghaziabad</div>
+                    <div class="text-sm text-gray-600">Resolution Rate: 89% • Response Time: 5.0 hrs</div>
+                    <div class="mt-2 flex gap-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">765 Resolved</span>
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">89% Satisfaction</span>
+                    </div>
+                  </div>
+                  <div class="text-2xl font-bold text-gray-600">89%</div>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-100">
+                  <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold">5</span>
+                  <div class="flex-1">
+                    <div class="font-bold text-lg text-gray-900">MLA Sonipat</div>
+                    <div class="text-sm text-gray-600">Resolution Rate: 85% • Response Time: 6.1 hrs</div>
+                    <div class="mt-2 flex gap-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">654 Resolved</span>
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">85% Satisfaction</span>
+                    </div>
+                  </div>
+                  <div class="text-2xl font-bold text-gray-600">85%</div>
                 </div>
               </div>
             </div>
@@ -850,6 +984,17 @@
         <div class="modal-actions">
           <button class="modal-btn yes" id="confirmLogout">Yes</button>
           <button class="modal-btn no" id="cancelLogout">No</button>
+        </div>
+      </div>
+    </div>
+    <!-- Status Change Confirmation Modal -->
+    <div id="statusChangeModal" class="modal-overlay" style="display:none;">
+      <div class="modal-box">
+        <h2>Change Status Confirmation</h2>
+        <p class="text-gray-600 mb-4">Are you sure you want to change the status to <span id="newStatusText" class="font-semibold"></span>?</p>
+        <div class="modal-actions">
+          <button class="modal-btn yes" id="confirmStatusChange">Yes</button>
+          <button class="modal-btn no" id="cancelStatusChange">No</button>
         </div>
       </div>
     </div>
@@ -1018,45 +1163,78 @@
             return `<span class="px-3 py-1 rounded-full text-xs font-semibold border ${cls}">${s}</span>`;
           }).join(' ');
           list.innerHTML += `
-            <div class="flex items-start gap-4 border-b pb-6 last:border-b-0">
-              <div class="flex-1">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
-                  <span class="font-semibold text-gray-800 text-sm">${c.user}</span>
-                  <span class="text-xs text-gray-400">${c.time}</span>
-                  ${c.fire ? '<span class="ml-1">🔥</span>' : ''}
-                </div>
-                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">${c.text}</div>
-                <div class="flex gap-2 mb-3">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
-                </div>
-                <div class="flex gap-3 items-center">
-                  <div class="flex items-center gap-1 px-3 py-1 rounded-full ${c.upvotes === maxUpvotes ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-700'} font-semibold text-sm">
-                    <span class="material-symbols-outlined text-base">arrow_upward</span>
-                    <span>Upvotes: ${c.upvotes}</span>
+            <div class="expandable-card border-b pb-6 last:border-b-0" data-complaint-id="${c.id}">
+              <div class="flex items-start gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                    <span class="font-semibold text-gray-800 text-sm">${c.user}</span>
+                    <span class="text-xs text-gray-400">${c.time}</span>
+                    ${c.fire ? '<span class="ml-1">🔥</span>' : ''}
                   </div>
-                  <button class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
-                    <span class="material-symbols-outlined text-base">chat_bubble</span>
-                    ${c.comments}
+                  <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">${c.text}</div>
+                  <div class="flex gap-2 mb-3">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold border ${c.status.includes('Urgent') ? 'bg-red-500 text-white border-red-500' : c.status.includes('Daily') ? 'bg-white text-blue-700 border-blue-400' : 'bg-gray-100 text-gray-800 border-gray-300'}">${c.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term') || 'Daily'}</span>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="flex items-center gap-1 px-3 py-1 rounded-full ${c.upvotes === maxUpvotes ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-700'} font-semibold text-sm">
+                      <span class="material-symbols-outlined text-base">arrow_upward</span>
+                      <span>Upvotes: ${c.upvotes}</span>
+                    </div>
+                    <button class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
+                      <span class="material-symbols-outlined text-base">chat_bubble</span>
+                      ${c.comments}
+                    </button>
+                    <div class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
+                      <span class="material-symbols-outlined text-base">update</span>
+                      <select class="status-select bg-transparent border-none focus:outline-none focus:ring-0 cursor-pointer" onchange="updateComplaintStatus(this, ${c.id})">
+                        <option value="" disabled ${!c.status[0] ? 'selected' : ''}>Status Update</option>
+                        <option value="unresolved" ${c.status[0] === 'Unresolved' ? 'selected' : ''}>Unresolved</option>
+                        <option value="inprogress" ${c.status[0] === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                        <option value="resolved" ${c.status[0] === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end gap-2">
+                  <button class="expand-button" onclick="toggleExpand(${c.id})">
+                    <span>View Details</span>
+                    <span class="material-symbols-outlined">expand_more</span>
                   </button>
-                  <div class="flex items-center gap-1 px-3 py-1 rounded-full border text-gray-700 font-semibold text-sm hover:bg-gray-100 transition">
-                    <span class="material-symbols-outlined text-base">update</span>
-                    <select class="status-select bg-transparent border-none focus:outline-none focus:ring-0 cursor-pointer" onchange="updateComplaintStatus(this, ${c.id})">
-                      <option value="" disabled ${!c.status[0] ? 'selected' : ''}>Status Update</option>
-                      <option value="unresolved" ${c.status[0] === 'Unresolved' ? 'selected' : ''}>Unresolved</option>
-                      <option value="inprogress" ${c.status[0] === 'In Progress' ? 'selected' : ''}>In Progress</option>
-                      <option value="resolved" ${c.status[0] === 'Resolved' ? 'selected' : ''}>Resolved</option>
-                    </select>
-                  </div>
+                  <img src="${c.image}" alt="complaint" class="w-32 h-24 object-cover rounded-lg shadow" />
                 </div>
               </div>
-              <div class="flex flex-col items-end gap-2">
-                <a href="#" class="text-blue-600 font-semibold text-sm hover:underline">View More</a>
-                <img src="${c.image}" alt="complaint" class="w-24 h-16 object-cover rounded-lg shadow" />
+              <div class="expandable-card-content">
+                <div class="expanded-content">
+                  <div class="expanded-content-grid">
+                    <div class="expanded-content-item">
+                      <h4>Location Details</h4>
+                      <p>Nanjappa Road, Faridabad</p>
+                    </div>
+                    <div class="expanded-content-item">
+                      <h4>Reported Issues</h4>
+                      <p>Water contamination, Health hazards</p>
+                    </div>
+                    <div class="expanded-content-item">
+                      <h4>Last Updated</h4>
+                      <p>2 days ago by ${c.user}</p>
+                    </div>
+                    <div class="expanded-content-item">
+                      <h4>Priority Level</h4>
+                      <p>${c.status.includes('Urgent') ? 'High' : c.status.includes('Daily') ? 'Medium' : 'Low'}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           `;
         });
+      }
+
+      // Add expandable card functionality
+      function toggleExpand(complaintId) {
+        const card = document.querySelector(`[data-complaint-id="${complaintId}"]`);
+        card.classList.toggle('expanded');
       }
 
       // Filtering logic
@@ -1089,38 +1267,38 @@
       }
 
       // Popup logic for Your Complaints
-      const openBtn = document.getElementById('openComplaintsSidebar');
-      const closeBtn = document.getElementById('closeComplaintsPopup');
-      const popup = document.getElementById('complaintsPopup');
-      const overlay = document.getElementById('complaintsPopupOverlay');
+      const openLeaderboardBtn = document.getElementById('openLeaderboardSidebar');
+      const closeLeaderboardBtn = document.getElementById('closeLeaderboardPopup');
+      const leaderboardPopup = document.getElementById('leaderboardPopup');
+      const leaderboardOverlay = document.getElementById('leaderboardPopupOverlay');
       let popupOpen = false;
 
-      const popupPanel = document.getElementById('complaintsPopupPanel');
-      openBtn.addEventListener('click', (e) => {
-        overlay.classList.remove('hidden');
-        popup.classList.remove('pointer-events-none');
+      const leaderboardPanel = document.getElementById('leaderboardPopupPanel');
+      openLeaderboardBtn.addEventListener('click', (e) => {
+        leaderboardOverlay.classList.remove('hidden');
+        leaderboardPopup.classList.remove('pointer-events-none');
         setTimeout(() => {
-          popupPanel.classList.remove('translate-x-full');
-          popupPanel.classList.remove('opacity-0');
+          leaderboardPanel.classList.remove('translate-x-full');
+          leaderboardPanel.classList.remove('opacity-0');
         }, 10);
         popupOpen = true;
       });
 
       function closeComplaintsModal() {
-        popupPanel.classList.add('translate-x-full');
-        popupPanel.classList.add('opacity-0');
+        leaderboardPanel.classList.add('translate-x-full');
+        leaderboardPanel.classList.add('opacity-0');
         setTimeout(() => {
-          overlay.classList.add('hidden');
-          popup.classList.add('pointer-events-none');
+          leaderboardOverlay.classList.add('hidden');
+          leaderboardPopup.classList.add('pointer-events-none');
         }, 300);
         popupOpen = false;
       }
 
-      closeBtn.addEventListener('click', closeComplaintsModal);
-      overlay.addEventListener('click', closeComplaintsModal);
+      closeLeaderboardBtn.addEventListener('click', closeComplaintsModal);
+      leaderboardOverlay.addEventListener('click', closeComplaintsModal);
 
       document.addEventListener('mousedown', function(event) {
-        if (popupOpen && !popupPanel.contains(event.target) && !openBtn.contains(event.target) && !event.target.closest('#complaintsPopupPanel')) {
+        if (popupOpen && !leaderboardPanel.contains(event.target) && !openLeaderboardBtn.contains(event.target) && !event.target.closest('#leaderboardPopupPanel')) {
           closeComplaintsModal();
         }
       });
@@ -1305,27 +1483,63 @@
       });
 
       // Update complaint status
+      let pendingStatusChange = null;
+      
+      function showStatusConfirmation(select, complaintId, newStatus) {
+        const statusText = newStatus === 'unresolved' ? 'Unresolved' : 
+                          newStatus === 'inprogress' ? 'In Progress' : 'Resolved';
+        
+        document.getElementById('newStatusText').textContent = statusText;
+        document.getElementById('statusChangeModal').style.display = 'flex';
+        
+        pendingStatusChange = { select, complaintId, newStatus };
+      }
+      
       function updateComplaintStatus(select, complaintId) {
         const newStatus = select.value;
         if (!newStatus) return; // Don't update if "Status Update" is selected
         
-        const statusText = newStatus === 'unresolved' ? 'Unresolved' : 
-                          newStatus === 'inprogress' ? 'In Progress' : 'Resolved';
-        
-        // Update the complaint status in the data
-        const complaint = complaints.find(c => c.id === complaintId);
-        if (complaint) {
-          // Keep the urgency/type status and update the resolution status
-          const urgencyStatus = complaint.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term');
-          complaint.status = [statusText, urgencyStatus];
-          
-          // Update the select element to show the new status
-          select.value = newStatus;
-          
-          // Re-render the complaints to update the UI
-          renderComplaints(urgencyFilter.value, typeFilter.value);
-        }
+        showStatusConfirmation(select, complaintId, newStatus);
       }
+      
+      // Add event listeners for status change confirmation
+      document.getElementById('confirmStatusChange').addEventListener('click', () => {
+        if (pendingStatusChange) {
+          const { select, complaintId, newStatus } = pendingStatusChange;
+          const statusText = newStatus === 'unresolved' ? 'Unresolved' : 
+                            newStatus === 'inprogress' ? 'In Progress' : 'Resolved';
+          
+          // Update the complaint status in the data
+          const complaint = complaints.find(c => c.id === complaintId);
+          if (complaint) {
+            // Keep the urgency/type status and update the resolution status
+            const urgencyStatus = complaint.status.find(s => s === 'Urgent' || s === 'Daily' || s === 'Long-Term');
+            complaint.status = [statusText, urgencyStatus];
+            
+            // Update the select element to show the new status
+            select.value = newStatus;
+            
+            // Re-render the complaints to update the UI
+            renderComplaints(urgencyFilter.value, typeFilter.value);
+          }
+          
+          // Hide the modal
+          document.getElementById('statusChangeModal').style.display = 'none';
+          pendingStatusChange = null;
+        }
+      });
+      
+      document.getElementById('cancelStatusChange').addEventListener('click', () => {
+        if (pendingStatusChange) {
+          // Reset the select to its previous value
+          const { select } = pendingStatusChange;
+          select.value = select.getAttribute('data-previous-value') || '';
+          
+          // Hide the modal
+          document.getElementById('statusChangeModal').style.display = 'none';
+          pendingStatusChange = null;
+        }
+      });
     </script>
   </body>
 </html>
