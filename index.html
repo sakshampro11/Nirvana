@@ -581,8 +581,10 @@
           </div>
         </div>
         <!-- Your Complaints -->
-        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm">
-          <a href="#" class="font-bold text-lg mb-2 block hover:text-blue-500 transition-colors duration-200">Your Complaints</a>
+        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="yourComplaintsCard">
+          <button id="openComplaintsSidebar" class="font-bold text-lg mb-2 block text-left w-full hover:text-blue-500 transition-colors duration-200 cursor-pointer focus:outline-none">
+            Your Complaints
+          </button>
           <div class="flex justify-between text-sm mb-1">
             <span>Water Drainage</span>
             <span class="text-gray-500">3hrs ago</span>
@@ -592,9 +594,49 @@
             <span class="text-gray-500">4days ago</span>
           </div>
         </div>
+        <!-- Modal Popup for Your Complaints -->
+        <div id="complaintsPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+        <div id="complaintsPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
+          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="complaintsPopupPanel">
+            <div class="flex justify-between items-center p-4 border-b">
+              <span class="font-bold text-xl">Your Complaints</span>
+              <button id="closeComplaintsPopup" class="text-2xl font-bold text-gray-500 hover:text-blue-500">&times;</button>
+            </div>
+            <div class="p-4 flex-1 overflow-auto space-y-4">
+              <!-- Two complaints from the feed -->
+              <div class="border rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">Yash Kaul</span>
+                  <span class="text-xs text-gray-400">2d ago</span>
+                  <span class="ml-1">🔥</span>
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-yellow-200 text-gray-800 border-yellow-400">Pending</span>
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-red-500 text-white border-red-500">Urgent</span>
+                </div>
+              </div>
+              <div class="border rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">Saanvi Karka</span>
+                  <span class="text-xs text-gray-400">2d ago</span>
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Faridabad, india open garbage disposal is huge problem here, however no one pay attention to it.</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-gray-200 text-gray-800 border-gray-400">In Progress</span>
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 border-gray-300">Long-Term</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Urgent Problems -->
-        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm">
-          <div class="font-bold text-lg mb-2">Urgent Problems</div>
+        <div class="rounded-2xl border-2 border-black p-4 bg-white shadow-sm relative" id="urgentProblemsCard">
+          <button id="openUrgentProblemsPopup" class="font-bold text-lg mb-2 block text-left w-full hover:text-red-500 transition-colors duration-200 cursor-pointer focus:outline-none">
+            Urgent Problems
+          </button>
           <div class="flex justify-between text-sm mb-1">
             <span>Water Drainage</span>
             <span class="text-gray-500">3hrs ago</span>
@@ -602,12 +644,38 @@
           <div class="flex justify-between text-sm">
             <span>Pipeline</span>
             <span class="text-gray-500">4days ago</span>
+          </div>
+        </div>
+        <!-- Modal Popup for Urgent Problems -->
+        <div id="urgentProblemsPopupOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+        <div id="urgentProblemsPopup" class="fixed inset-0 flex items-center justify-end z-50 pointer-events-none pr-24">
+          <div class="w-[40rem] h-[36rem] bg-white shadow-2xl rounded-xl border border-gray-200 flex flex-col transform translate-x-full opacity-0 transition-all duration-300 pointer-events-auto" id="urgentProblemsPopupPanel">
+            <div class="flex justify-between items-center p-4 border-b">
+              <span class="font-bold text-xl">Urgent Problems</span>
+              <button id="closeUrgentProblemsPopup" class="text-2xl font-bold text-gray-500 hover:text-red-500">&times;</button>
+            </div>
+            <div class="p-4 flex-1 overflow-auto space-y-4">
+              <!-- Urgent complaint from the feed -->
+              <div class="border rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-4 h-4 rounded-full border border-gray-400 inline-block"></span>
+                  <span class="font-semibold text-gray-800 text-sm">Yash Kaul</span>
+                  <span class="text-xs text-gray-400">2d ago</span>
+                  <span class="ml-1">🔥</span>
+                </div>
+                <div class="font-bold text-lg text-gray-900 mb-2 leading-snug">Dirty water plagues Nanjappa Road residents as BWSSB fails to resolve decade-old contamination issues.</div>
+                <div class="flex gap-2 mb-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-yellow-200 text-gray-800 border-yellow-400">Pending</span>
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold border bg-red-500 text-white border-red-500">Urgent</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Floating New Complaint Button -->
-    <button class="fixed bottom-8 right-12 z-40 animated-complaint-btn">
+    <button id="openNewComplaint" class="fixed bottom-8 right-12 z-40 animated-complaint-btn">
       <span class="outline"></span>
       <span class="state">
         <span class="icon">
@@ -638,6 +706,58 @@
           <button class="modal-btn yes" id="confirmLogout">Yes</button>
           <button class="modal-btn no" id="cancelLogout">No</button>
         </div>
+      </div>
+    </div>
+    <!-- Overlay for New Complaint Modal -->
+    <div id="newComplaintOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden"></div>
+    <!-- New Complaint Modal -->
+    <div id="newComplaintModal" class="fixed inset-0 flex items-end justify-start z-50 pointer-events-none px-12">
+      <div id="newComplaintPanel"
+        class="bg-white rounded-2xl shadow-2xl border border-gray-200 transform translate-y-full opacity-0 transition-all duration-300 pointer-events-auto relative mb-16"
+        style="width: 149.76rem; height: 40rem;"
+      >
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold">Create New Complaint</h2>
+            <button class="border px-3 py-1 rounded-full text-xs font-semibold">Drafts</button>
+          </div>
+          <select class="border rounded-md px-4 py-2 mb-6 w-full text-gray-700">
+            <option>Select Location</option>
+            <!-- Add more options as needed -->
+          </select>
+          <div class="flex border-b mb-4">
+            <button class="px-4 py-2 font-semibold border-b-2 border-blue-500 text-blue-600">Text</button>
+            <button class="px-4 py-2 font-semibold text-gray-500">Images & Video</button>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-1">Title</label>
+            <input type="text" maxlength="300" class="w-full border rounded-md px-3 py-2" placeholder="Enter text here..." />
+            <div class="text-right text-xs text-gray-400 mt-1">0/300</div>
+          </div>
+          <div class="mb-4 flex items-center gap-2">
+            <button class="border px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">add</span>
+              Add Tag
+            </button>
+          </div>
+          <div class="mb-8">
+            <label class="block text-sm font-medium mb-1">Describe your problem</label>
+            <textarea class="w-full border rounded-md px-3 py-2" rows="3" placeholder="Enter text here..."></textarea>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button class="border px-4 py-2 rounded-md text-gray-700 font-semibold flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">save</span>
+              Save Draft
+            </button>
+            <button class="bg-blue-500 text-white px-6 py-2 rounded-md font-semibold">Post</button>
+          </div>
+        </div>
+      </div>
+      <!-- Cancel button outside the modal panel -->
+      <div class="flex items-end justify-end" style="width: 100%; height: 40rem; margin-right: 6rem;">
+        <button id="closeNewComplaint" class="hidden bg-blue-500 text-white px-8 py-3 rounded-lg font-bold text-lg shadow hover:bg-blue-600 transition self-end">
+          CANCEL
+        </button>
       </div>
     </div>
     <script>
@@ -851,6 +971,126 @@
           window.location.href = 'landing.html';
         });
       }
+
+      // Popup logic for Your Complaints
+      const openBtn = document.getElementById('openComplaintsSidebar');
+      const closeBtn = document.getElementById('closeComplaintsPopup');
+      const popup = document.getElementById('complaintsPopup');
+      const overlay = document.getElementById('complaintsPopupOverlay');
+      let popupOpen = false;
+
+      const popupPanel = document.getElementById('complaintsPopupPanel');
+      openBtn.addEventListener('click', (e) => {
+        overlay.classList.remove('hidden');
+        popup.classList.remove('pointer-events-none');
+        setTimeout(() => {
+          popupPanel.classList.remove('translate-x-full');
+          popupPanel.classList.remove('opacity-0');
+        }, 10);
+        popupOpen = true;
+      });
+
+      function closeComplaintsModal() {
+        popupPanel.classList.add('translate-x-full');
+        popupPanel.classList.add('opacity-0');
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          popup.classList.add('pointer-events-none');
+        }, 300);
+        popupOpen = false;
+      }
+
+      closeBtn.addEventListener('click', closeComplaintsModal);
+      overlay.addEventListener('click', closeComplaintsModal);
+
+      document.addEventListener('mousedown', function(event) {
+        if (popupOpen && !popupPanel.contains(event.target) && !openBtn.contains(event.target) && !event.target.closest('#complaintsPopupPanel')) {
+          closeComplaintsModal();
+        }
+      });
+
+      // Popup logic for Urgent Problems
+      const openUrgentBtn = document.getElementById('openUrgentProblemsPopup');
+      const closeUrgentBtn = document.getElementById('closeUrgentProblemsPopup');
+      const urgentPopup = document.getElementById('urgentProblemsPopup');
+      const urgentOverlay = document.getElementById('urgentProblemsPopupOverlay');
+      let urgentPopupOpen = false;
+
+      const urgentPopupPanel = document.getElementById('urgentProblemsPopupPanel');
+      openUrgentBtn.addEventListener('click', (e) => {
+        urgentOverlay.classList.remove('hidden');
+        urgentPopup.classList.remove('pointer-events-none');
+        setTimeout(() => {
+          urgentPopupPanel.classList.remove('translate-x-full');
+          urgentPopupPanel.classList.remove('opacity-0');
+        }, 10);
+        urgentPopupOpen = true;
+      });
+
+      function closeUrgentModal() {
+        urgentPopupPanel.classList.add('translate-x-full');
+        urgentPopupPanel.classList.add('opacity-0');
+        setTimeout(() => {
+          urgentOverlay.classList.add('hidden');
+          urgentPopup.classList.add('pointer-events-none');
+        }, 300);
+        urgentPopupOpen = false;
+      }
+
+      closeUrgentBtn.addEventListener('click', closeUrgentModal);
+      urgentOverlay.addEventListener('click', closeUrgentModal);
+
+      document.addEventListener('mousedown', function(event) {
+        if (urgentPopupOpen && !urgentPopupPanel.contains(event.target) && !openUrgentBtn.contains(event.target) && !event.target.closest('#urgentProblemsPopupPanel')) {
+          closeUrgentModal();
+        }
+      });
+
+      // New Complaint Modal logic
+      const openNewComplaintBtn = document.getElementById('openNewComplaint');
+      const closeNewComplaintBtn = document.getElementById('closeNewComplaint');
+      const newComplaintModal = document.getElementById('newComplaintModal');
+      const newComplaintPanel = document.getElementById('newComplaintPanel');
+      const newComplaintOverlay = document.getElementById('newComplaintOverlay');
+      let newComplaintOpen = false;
+
+      openNewComplaintBtn.addEventListener('click', () => {
+        newComplaintOverlay.classList.remove('hidden');
+        newComplaintModal.classList.remove('pointer-events-none');
+        setTimeout(() => {
+          newComplaintPanel.classList.remove('translate-y-full');
+          newComplaintPanel.classList.remove('opacity-0');
+          setTimeout(() => {
+            closeNewComplaintBtn.classList.remove('hidden');
+          }, 300);
+        }, 10);
+        newComplaintOpen = true;
+      });
+
+      function closeNewComplaintModal() {
+        newComplaintPanel.classList.add('translate-y-full');
+        newComplaintPanel.classList.add('opacity-0');
+        closeNewComplaintBtn.classList.add('hidden');
+        setTimeout(() => {
+          newComplaintOverlay.classList.add('hidden');
+          newComplaintModal.classList.add('pointer-events-none');
+        }, 300);
+        newComplaintOpen = false;
+      }
+
+      closeNewComplaintBtn.addEventListener('click', closeNewComplaintModal);
+      newComplaintOverlay.addEventListener('click', closeNewComplaintModal);
+
+      document.addEventListener('mousedown', function(event) {
+        if (
+          newComplaintOpen &&
+          !newComplaintPanel.contains(event.target) &&
+          !openNewComplaintBtn.contains(event.target) &&
+          !event.target.closest('#newComplaintPanel')
+        ) {
+          closeNewComplaintModal();
+        }
+      });
     </script>
   </body>
-</html> 
+</html>
