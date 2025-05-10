@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Lokally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body, html {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .font-space-grotesk {
+      font-family: 'Space Grotesk', sans-serif !important;
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen flex items-center justify-center font-space-grotesk">
+  <div class="flex w-full max-w-6xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden">
+    <!-- Left Side Image -->
+    <div class="hidden md:flex flex-col justify-center items-center bg-gray-100 w-1/2 p-8">
+      <img src="https://cdn3d.iconscout.com/3d/premium/thumb/login-3025711-2526913.png" alt="Sign Up Illustration" class="w-80 h-96 object-contain mx-auto" />
+      <div class="flex justify-center mt-4">
+        <span class="h-2 w-8 bg-blue-500 rounded-full mx-1"></span>
+        <span class="h-2 w-2 bg-gray-300 rounded-full mx-1"></span>
+        <span class="h-2 w-2 bg-gray-300 rounded-full mx-1"></span>
+      </div>
+    </div>
+    <!-- Right Side Form -->
+    <div class="flex-1 p-10">
+      <div class="flex justify-end">
+        <span class="text-4xl font-bold text-blue-500 mb-8">Lokally</span>
+      </div>
+      <h2 class="text-4xl font-bold text-gray-800 mb-2">Sign Up</h2>
+      <p class="text-gray-500 mb-8">Let's get you all set up so you can access your personal account.</p>
+      <form class="space-y-4">
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <label class="block text-sm text-gray-600 mb-1">First Name</label>
+            <input type="text" placeholder="Enter Name" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+          <div class="flex-1">
+            <label class="block text-sm text-gray-600 mb-1">Last Name</label>
+            <input type="text" placeholder="Enter Name" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <label class="block text-sm text-gray-600 mb-1">Email</label>
+            <input type="email" placeholder="Enter email id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+          <div class="flex-1">
+            <label class="block text-sm text-gray-600 mb-1">Phone Number</label>
+            <input type="tel" placeholder="eg. 8723863488" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Aadhar Number</label>
+          <div class="relative">
+            <input type="text" placeholder="5558 9992 XXXX" class="w-full border border-gray-300 rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400" id="aadhar" />
+            <button type="button" onclick="toggleAadhar('aadhar')" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              <svg id="aadhar-eye" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Confirm Aadhar Number</label>
+          <div class="relative">
+            <input type="password" placeholder="Confirm Aadhar Number" class="w-full border border-gray-300 rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400" id="confirm-aadhar" />
+            <button type="button" onclick="toggleAadhar('confirm-aadhar')" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              <svg id="confirm-aadhar-eye" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <input type="checkbox" id="terms" class="mr-2" />
+          <label for="terms" class="text-sm text-gray-600">I agree to all the <a href="#" class="text-blue-500 underline">Terms</a> and <a href="#" class="text-blue-500 underline">Privacy Policies</a></label>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-md mt-2 hover:bg-blue-600 transition">Create account</button>
+        <p class="text-center text-sm text-gray-500 mt-2">Already have an account? <a href="sign-in.html" class="text-blue-500 font-semibold">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+  <script>
+    function toggleAadhar(id) {
+      const input = document.getElementById(id);
+      const eye = document.getElementById(id + '-eye');
+      if (input.type === "password") {
+        input.type = "text";
+        eye.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.293-3.95m1.414-1.414A9.956 9.956 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.293 5.95M15 12a3 3 0 11-6 0 3 3 0 016 0z" />`;
+      } else {
+        input.type = "password";
+        eye.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+      }
+    }
+
+    // Redirect to index.html on form submit
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('form');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
+</body>
+</html> 
