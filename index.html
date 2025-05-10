@@ -522,6 +522,65 @@
       .modal-btn.no:hover {
         background: #e5e7eb;
       }
+      /* File Upload Styles */
+      .custum-file-upload {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        gap: 20px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #e8e8e8;
+        background-color: #212121;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0px 48px 35px -48px #e8e8e8;
+        transition: all 0.3s ease;
+      }
+
+      .custum-file-upload:hover {
+        border-color: #2D89DA;
+        background-color: #1a1a1a;
+      }
+
+      .custum-file-upload .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .custum-file-upload .icon svg {
+        height: 80px;
+        fill: #e8e8e8;
+        transition: all 0.3s ease;
+      }
+
+      .custum-file-upload:hover .icon svg {
+        fill: #2D89DA;
+      }
+
+      .custum-file-upload .text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .custum-file-upload .text span {
+        font-weight: 400;
+        color: #e8e8e8;
+        transition: all 0.3s ease;
+      }
+
+      .custum-file-upload:hover .text span {
+        color: #2D89DA;
+      }
+
+      .custum-file-upload input {
+        display: none;
+      }
     </style>
   </head>
   <body class="min-h-screen bg-white">
@@ -771,28 +830,55 @@
             <h2 class="text-3xl font-bold">Create New Complaint</h2>
             <button class="border px-3 py-1 rounded-full text-xs font-semibold">Drafts</button>
           </div>
-          <select class="border rounded-md px-4 py-2 mb-6 w-full text-gray-700">
-            <option>Select Location</option>
-            <!-- Add more options as needed -->
-          </select>
           <div class="flex border-b mb-4">
-            <button class="px-4 py-2 font-semibold border-b-2 border-blue-500 text-blue-600">Text</button>
-            <button class="px-4 py-2 font-semibold text-gray-500">Images & Video</button>
+            <button id="textTabBtn" class="px-4 py-2 font-semibold border-b-2 border-blue-500 text-blue-600">Text</button>
+            <button id="imagesTabBtn" class="px-4 py-2 font-semibold text-gray-500">Images & Video</button>
           </div>
-          <div class="mb-4">
-            <label class="block text-sm font-medium mb-1">Title</label>
-            <input type="text" maxlength="300" class="w-full border rounded-md px-3 py-2" placeholder="Enter text here..." />
-            <div class="text-right text-xs text-gray-400 mt-1">0/300</div>
+          <div id="textTab" class="tab-content">
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Title</label>
+              <input type="text" maxlength="300" class="w-full border rounded-md px-3 py-2" placeholder="Enter text here..." />
+              <div class="text-right text-xs text-gray-400 mt-1">0/300</div>
+            </div>
+            <div class="mb-4 flex items-center gap-2">
+              <button class="border px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-base">add</span>
+                Add Tag
+              </button>
+            </div>
+            <div class="mb-8">
+              <label class="block text-sm font-medium mb-1">Describe your problem</label>
+              <textarea class="w-full border rounded-md px-3 py-2" rows="3" placeholder="Enter text here..."></textarea>
+            </div>
           </div>
-          <div class="mb-4 flex items-center gap-2">
-            <button class="border px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-              <span class="material-symbols-outlined text-base">add</span>
-              Add Tag
-            </button>
-          </div>
-          <div class="mb-8">
-            <label class="block text-sm font-medium mb-1">Describe your problem</label>
-            <textarea class="w-full border rounded-md px-3 py-2" rows="3" placeholder="Enter text here..."></textarea>
+          <div id="imagesTab" class="tab-content hidden">
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Title</label>
+              <input type="text" maxlength="300" class="w-full border rounded-md px-3 py-2" placeholder="Enter text here..." />
+              <div class="text-right text-xs text-gray-400 mt-1">0/300</div>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Upload Images/Video</label>
+              <label for="file" class="custum-file-upload">
+                <div class="icon">
+                  <svg viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" fill=""></path>
+                    </g>
+                  </svg>
+                </div>
+                <div class="text">
+                  <span>Click to upload image</span>
+                </div>
+                <input id="file" type="file" accept="image/*,video/*">
+              </label>
+            </div>
+            <div class="mb-8">
+              <label class="block text-sm font-medium mb-1">Describe your problem</label>
+              <textarea class="w-full border rounded-md px-3 py-2" rows="3" placeholder="Enter text here..."></textarea>
+            </div>
           </div>
           <div class="flex justify-end gap-2">
             <button class="border px-4 py-2 rounded-md text-gray-700 font-semibold flex items-center gap-1">
@@ -1212,6 +1298,30 @@
           notificationsPopup.classList.remove('scale-100', 'opacity-100');
           notificationsOpen = false;
         }
+      });
+
+      // Tab switching logic
+      const textTabBtn = document.getElementById('textTabBtn');
+      const imagesTabBtn = document.getElementById('imagesTabBtn');
+      const textTab = document.getElementById('textTab');
+      const imagesTab = document.getElementById('imagesTab');
+
+      textTabBtn.addEventListener('click', () => {
+        textTabBtn.classList.add('border-b-2', 'border-blue-500', 'text-blue-600');
+        textTabBtn.classList.remove('text-gray-500');
+        imagesTabBtn.classList.remove('border-b-2', 'border-blue-500', 'text-blue-600');
+        imagesTabBtn.classList.add('text-gray-500');
+        textTab.classList.remove('hidden');
+        imagesTab.classList.add('hidden');
+      });
+
+      imagesTabBtn.addEventListener('click', () => {
+        imagesTabBtn.classList.add('border-b-2', 'border-blue-500', 'text-blue-600');
+        imagesTabBtn.classList.remove('text-gray-500');
+        textTabBtn.classList.remove('border-b-2', 'border-blue-500', 'text-blue-600');
+        textTabBtn.classList.add('text-gray-500');
+        imagesTab.classList.remove('hidden');
+        textTab.classList.add('hidden');
       });
     </script>
   </body>
